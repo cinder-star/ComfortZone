@@ -1,7 +1,8 @@
-package com.sihan.comfortzone
+package com.sihan.comfortzone.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sihan.comfortzone.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
