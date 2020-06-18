@@ -15,4 +15,6 @@
     <string name="sign_up_with_email">Sign up with email</string>
     <string name="sign_up_with_facebook">Sign up with facebook</string>
     <string name="sign_up_with_phone_number">sign up with phone number</string>
+    <string name="facebook_app_id">752543968619271</string>
+    <string name="fb_login_protocol_scheme">fb752543968619271</string>
 </resources>
