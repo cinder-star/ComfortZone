@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sihan.comfortzone">
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.FacebookSignUpActivity"></activity>
+        <activity android:name=".activities.SliderActivity"></activity>
+        <activity android:name=".activities.FacebookSignUpActivity" />
         <activity android:name=".activities.SignupChooser" />
         <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.SplashActivity">
@@ -24,8 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>
