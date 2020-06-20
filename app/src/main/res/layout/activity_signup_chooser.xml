@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="#B71818"
+        android:background="@color/brand"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/sign_in_buttons">
 
@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_logo"
-            android:contentDescription="@string/logo"></ImageView>
+            android:contentDescription="@string/logo" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_logotext"
-            android:contentDescription="@string/logo"></ImageView>
+            android:contentDescription="@string/logo" />
     </LinearLayout>
 
     <LinearLayout
