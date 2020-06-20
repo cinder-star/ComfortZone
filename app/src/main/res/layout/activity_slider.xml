@@ -10,32 +10,19 @@
         android:id="@+id/onboardingSlider"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/slider_buttons" />
+        app:layout_constraintBottom_toTopOf="@+id/slider_skip" />
 
-    <LinearLayout
-        android:id="@+id/slider_buttons"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/slider_skip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/slider_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/skip" />
-
-        <Button
-            android:id="@+id/slider_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:layout_margin="10dp" />
-    </LinearLayout>
+        android:layout_margin="10dp"
+        android:text="@string/skip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
