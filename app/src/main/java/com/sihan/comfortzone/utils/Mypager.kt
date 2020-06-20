@@ -26,7 +26,7 @@ class MyPager(private val context: Context): PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_onboarding_slider_page, null)
         val imageView: ImageView = view.findViewById(R.id.slider_image)
-        imageView.setImageDrawable(ResourcesCompat.getDrawable(context.resources, getImageAt(0), null))
+        imageView.setImageDrawable(ResourcesCompat.getDrawable(context.resources, getImageAt(position), null))
         container.addView(view)
         return view
     }
