@@ -1,31 +1,36 @@
 package com.sihan.comfortzone.activities
 
+
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager.widget.ViewPager
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.utils.MyPager
 
 class SliderActivity : AppCompatActivity() {
-    private lateinit var viewPager: ViewPager2
+    private lateinit var viewPager: ViewPager
+    private lateinit var myPager: MyPager
+    private lateinit var skip: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_slider)
-
-        viewPager = findViewById(R.id.onboardingSlider)
-        val onboardingSliderAdapter = OnboardingSliderAdapter(this)
-        viewPager.adapter = onboardingSliderAdapter
+        bindWidgets()
+        bindListeners()
     }
 
-    private inner class OnboardingSliderAdapter(manager: FragmentActivity) :
-        FragmentStateAdapter(manager) {
-        private val ids: IntArray =
-            intArrayOf(R.drawable.ic_slide_1, R.drawable.ic_slide_2, R.drawable.ic_slide_3)
+    private fun bindListeners() {
+        skip.setOnClickListener {
+            startActivity(Intent(this, SignupChooser::class.java))
+        }
+    }
 
-        override fun getItemCount(): Int = ids.size
-        override fun createFragment(position: Int): Fragment =
-            OnboardingSliderPageFragment(position)
+    private fun bindWidgets() {
+        viewPager = findViewById(R.id.onboardingSlider)
+        myPager = MyPager(this)
+        viewPager.adapter = myPager
+        skip = findViewById(R.id.slider_skip)
     }
 }
