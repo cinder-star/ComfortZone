@@ -23,7 +23,7 @@ class SliderActivity : AppCompatActivity() {
 
     private fun bindListeners() {
         skip.setOnClickListener {
-            startActivity(Intent(this, SignupChooser::class.java))
+            startActivity(Intent(this, SignUpChooser::class.java))
         }
     }
 

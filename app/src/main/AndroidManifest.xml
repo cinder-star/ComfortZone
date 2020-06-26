@@ -13,9 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.FacebookSignUpActivity" />
-        <activity android:name=".activities.SignupChooser" />
-        <activity android:name=".activities.SignupActivity" />
+        <activity android:name=".activities.SignUpChooser" />
         <activity android:name=".activities.SliderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
