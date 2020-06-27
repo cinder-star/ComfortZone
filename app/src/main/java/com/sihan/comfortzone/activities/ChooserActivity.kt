@@ -9,13 +9,15 @@ import com.facebook.login.widget.LoginButton
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.repositories.FacebookLogin
 
-class SignUpChooser : AppCompatActivity() {
+class ChooserActivity : AppCompatActivity() {
     private lateinit var emailSignUp: Button
+    private lateinit var phoneNumberSignUp: Button
     private lateinit var facebookLoginButton: LoginButton
+    private lateinit var facebookLogin: FacebookLogin
     private lateinit var callbackManager: CallbackManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_chooser)
+        setContentView(R.layout.activity_chooser)
         title = "লগইন"
         bindWidgets()
         bindListeners()
@@ -23,7 +25,10 @@ class SignUpChooser : AppCompatActivity() {
 
     private fun bindListeners() {
         emailSignUp.setOnClickListener {
-            startActivity(Intent(this@SignUpChooser, SignupActivity::class.java))
+            startActivity(Intent(this@ChooserActivity, SignupActivity::class.java))
+        }
+        phoneNumberSignUp.setOnClickListener {
+            startActivity(Intent(this@ChooserActivity, PhoneLoginActivity::class.java))
         }
     }
 
@@ -32,8 +37,9 @@ class SignUpChooser : AppCompatActivity() {
         facebookLoginButton = findViewById(R.id.facebook_login_button)
         facebookLoginButton.setPermissions("email", "public_profile")
         callbackManager = CallbackManager.Factory.create()
-        val facebookLogin = FacebookLogin(this, facebookLoginButton, callbackManager)
+        facebookLogin = FacebookLogin(this, facebookLoginButton, callbackManager)
         facebookLogin.setup()
+        phoneNumberSignUp = findViewById(R.id.phone_number_sign_up)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -23,4 +23,9 @@
     <string name="slider_image">sliderImage</string>
     <string name="logo">Logo</string>
     <string name="comfort_zone">Comfort Zone</string>
+    <string name="mobile_no">মোবাইল নম্বর</string>
+    <string name="dummy_number">01XXXXXXXXX</string>
+    <string name="please_confirm">নিশ্চিত করুন</string>
+    <string name="code">কোড</string>
+    <string name="code_prompt">৬-ডিজিটের কোড</string>
 </resources>
