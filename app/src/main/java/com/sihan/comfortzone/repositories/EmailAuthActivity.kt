@@ -35,4 +35,18 @@ abstract class EmailAuthActivity(private var xmlId: Int) : AppCompatActivity() {
             }
         }
     }
+
+    fun logInUser(p0: String, p1: String) {
+        auth.signInWithEmailAndPassword(p0, p1)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d("email_log_in", "signInWithEmail:success")
+                    startActivity(Intent(this, MainActivity::class.java))
+                } else {
+                    Log.w("email_log_in", "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 }

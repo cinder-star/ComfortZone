@@ -25,7 +25,7 @@ class ChooserActivity : AppCompatActivity() {
 
     private fun bindListeners() {
         emailSignUp.setOnClickListener {
-            startActivity(Intent(this@ChooserActivity, SignUpActivity::class.java))
+            startActivity(Intent(this@ChooserActivity, LoginActivity::class.java))
         }
         phoneNumberSignUp.setOnClickListener {
             startActivity(Intent(this@ChooserActivity, PhoneLoginActivity::class.java))

@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.ConfirmPhoneNumber"/>
         <activity android:name=".activities.SignUpActivity"/>
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.ConfirmPhoneNumber" />
         <activity android:name=".activities.ChooserActivity" />
         <activity android:name=".activities.PhoneLoginActivity" />
         <activity android:name=".activities.SliderActivity">
