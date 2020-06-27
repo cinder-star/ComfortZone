@@ -1,0 +1,22 @@
+<!-- bottom_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="হোম"
+        app:cnb_iconColor="@color/brand" />
+    <item
+        android:id="@+id/activity"
+        android:icon="@drawable/ic_bag"
+        android:title="বাজারের ঝুড়ি"
+        app:cnb_iconColor="@color/brand" />
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_bell"
+        android:title="বিজ্ঞপ্তি"
+        app:cnb_iconColor="@color/brand" />
+</menu>
+
+    <!-- layout.xml -->
+
