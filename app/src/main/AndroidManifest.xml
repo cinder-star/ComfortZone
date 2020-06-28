@@ -13,8 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.SignUpActivity"/>
-        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.SearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.ConfirmPhoneNumber" />
         <activity android:name=".activities.ChooserActivity" />
         <activity android:name=".activities.PhoneLoginActivity" />
@@ -25,7 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity">
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".activities.SearchActivity"/>
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
