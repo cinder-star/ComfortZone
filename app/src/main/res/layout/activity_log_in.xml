@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:inputType="text"
         android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
         android:layout_marginBottom="10dp"
         android:importantForAutofill="no" />
 
