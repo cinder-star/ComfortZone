@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.sihan.comfortzone.R
 
 class SearchActivity : AppCompatActivity() {
@@ -18,6 +19,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun prepareResult(query: String) {
-        TODO("Not yet implemented")
+        Log.e("query_string", query)
     }
 }

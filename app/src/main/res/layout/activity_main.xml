@@ -20,13 +20,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        
+        <FrameLayout
+            android:id="@+id/toolbar_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/brand"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:background="@color/brand"/>
+            
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/my_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/nav_bar"
