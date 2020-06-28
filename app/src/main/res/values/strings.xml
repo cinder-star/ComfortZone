@@ -35,4 +35,6 @@
     <string name="home">হোম</string>
     <string name="cart">বাজারের ঝুড়ি</string>
     <string name="notifications">বিজ্ঞপ্তি</string>
+    <string name="open_nav">"Open nav drawer"</string>
+    <string name="close_nav">"Close nav drawer"</string>
 </resources>
