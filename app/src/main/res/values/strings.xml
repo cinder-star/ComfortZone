@@ -32,4 +32,7 @@
     <string name="do_confirm_password">কনফার্ম করুন পাসওয়ার্ড</string>
     <string name="not_have_an_account">অ্যাকাউন্ট নেই? তৈরি করুন\ </string>
     <string name="here">এখানে</string>
+    <string name="home">হোম</string>
+    <string name="cart">বাজারের ঝুড়ি</string>
+    <string name="notifications">বিজ্ঞপ্তি</string>
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:background="@color/brand"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/ic_logo"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/logo" />
+
+    <ImageView
+        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_logotext"
+        android:contentDescription="@string/logo" />
+
+</LinearLayout>
