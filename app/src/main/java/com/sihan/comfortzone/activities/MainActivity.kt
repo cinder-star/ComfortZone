@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindWidgets() {
         navigationBar = findViewById(R.id.nav_bar)
-        navigationBar.setItemSelected(0)
+        navigationBar.setItemSelected(R.id.home)
     }
 
 
