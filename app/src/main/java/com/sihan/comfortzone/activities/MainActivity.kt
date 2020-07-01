@@ -5,24 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.DataManager
-import com.sihan.comfortzone.domains.Product
-import com.sihan.comfortzone.domains.ShoppingCart
-import com.sihan.comfortzone.utils.ProductAdapter
+import com.sihan.comfortzone.fragments.CartFragment
+import com.sihan.comfortzone.fragments.ProductFragment
 import io.paperdb.Paper
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navigationBar: ChipNavigationBar
@@ -31,31 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var materialSearchView: MaterialSearchView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var productRecyclerView: RecyclerView
-    private lateinit var productAdapter: ProductAdapter
-    private lateinit var cartIndicator: TextView
-    private var dataManager: DataManager<Product> = DataManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bindWidgets()
         bindListeners()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        prepareProductView()
-    }
-
-    private fun prepareProductView() {
-        swipeRefreshLayout.isRefreshing = true
-        val productList = dataManager.getItems()
-        swipeRefreshLayout.isRefreshing = false
-        productAdapter = ProductAdapter(this@MainActivity, productList)
-        productRecyclerView.adapter = productAdapter
-        productAdapter.notifyDataSetChanged()
+        loadFragment(ProductFragment())
     }
 
     private fun bindListeners() {
@@ -78,10 +55,7 @@ class MainActivity : AppCompatActivity() {
             override fun onSearchViewShown() {
             }
         })
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.brand))
-        swipeRefreshLayout.setOnRefreshListener {
-            prepareProductView()
-        }
+        prepareBottomNavBar()
     }
 
     private fun bindWidgets() {
@@ -105,11 +79,6 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
 
         materialSearchView = findViewById(R.id.my_search_bar)
-        swipeRefreshLayout = findViewById(R.id.swipe_bar)
-        productRecyclerView = findViewById(R.id.product_list)
-        productRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        cartIndicator = findViewById(R.id.cart_size)
-        cartIndicator.text = ShoppingCart.getShoppingCartSize().toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,11 +89,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_search){
-            return true
+        return when(item.itemId) {
+            R.id.action_search -> true
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
@@ -133,5 +101,25 @@ class MainActivity : AppCompatActivity() {
         } else {
             finishAffinity()
         }
+    }
+
+    private fun prepareBottomNavBar(){
+        navigationBar.setOnItemSelectedListener(object: ChipNavigationBar.OnItemSelectedListener{
+            override fun onItemSelected(id: Int) {
+                when(id) {
+                    R.id.home -> loadFragment(ProductFragment())
+                    R.id.cart -> loadFragment(CartFragment())
+                }
+            }
+
+        })
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val manager = supportFragmentManager.beginTransaction()
+        manager.replace(R.id.fragment_holder, fragment)
+        manager.addToBackStack(null)
+        manager.commit()
     }
 }
