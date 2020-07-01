@@ -32,7 +32,7 @@ class ShoppingCart {
             Paper.book().write("cart", cart)
         }
 
-        private fun getCart(): MutableList<CartItem> {
+        fun getCart(): MutableList<CartItem> {
             return Paper.book().read("cart", mutableListOf())
         }
         fun getShoppingCartSize(): Int {
