@@ -37,4 +37,6 @@
     <string name="notifications">বিজ্ঞপ্তি</string>
     <string name="open_nav">"Open nav drawer"</string>
     <string name="close_nav">"Close nav drawer"</string>
+    <string name="product">product</string>
+    <string name="add_to_cart">add_to_cart</string>
 </resources>
