@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/bdt_icon"
-                    android:textColor="@android:color/holo_red_light"
+                    android:textColor="@color/brand"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/product_price"
-                    android:textColor="@android:color/holo_red_light"
+                    android:textColor="@color/brand"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -75,10 +75,10 @@
             android:id="@+id/product_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginEnd="12dp"
             android:background="@drawable/button_bg_gray"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:textColor="@android:color/black"
