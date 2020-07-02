@@ -40,5 +40,8 @@
     <string name="product">product</string>
     <string name="add_to_cart">add_to_cart</string>
     <string name="checkout">Checkout</string>
-    <string name="total">Total</string>
+    <string name="total">Total: </string>
+    <string name="bdt_icon">৳</string>
+    <string name="product_price">Product price</string>
+    <string name="product_name">Product name</string>
 </resources>
