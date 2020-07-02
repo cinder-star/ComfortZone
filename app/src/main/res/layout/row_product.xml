@@ -72,7 +72,7 @@
                 android:background="@drawable/button_bg_white"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="4dp"
-                android:src="@drawable/ic_remove_cart"
+                android:src="@drawable/ic_trash"
                 android:tint="@android:color/black"
                 card_view:ignore="ContentDescription"
                 card_view:targetApi="o" />
