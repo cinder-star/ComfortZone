@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.content.FileProvider
 import com.sihan.comfortzone.R
+import com.squareup.picasso.Picasso
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -76,7 +77,7 @@ class PhotoOrder : AppCompatActivity() {
                         // Use older version
                         MediaStore.Images.Media.getBitmap(this.contentResolver, Uri.fromFile(file))
                     }
-                    imageView.setImageBitmap(bitmap)
+                    Picasso.get().load(file).into(imageView)
                 } catch (e: Exception) {}
             }
         }
