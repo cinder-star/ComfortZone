@@ -2,12 +2,17 @@ package com.sihan.comfortzone.activities
 
 import android.app.SearchManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
@@ -56,6 +61,28 @@ class MainActivity : AppCompatActivity(){
             }
         })
         prepareBottomNavBar()
+        prepareHamburgerMenu()
+    }
+
+    private fun prepareHamburgerMenu() {
+        Log.e("item", "setup")
+        navigationView.setNavigationItemSelectedListener { item ->
+            selectDrawerItem(item)
+            return@setNavigationItemSelectedListener true
+        }
+    }
+
+    private fun selectDrawerItem(item: MenuItem) {
+        when(item.itemId) {
+            R.id.home_drawer -> {
+                Toast.makeText(this@MainActivity, "home", Toast.LENGTH_SHORT).show()
+            }
+            R.id.cart_drawer -> {
+                Toast.makeText(this@MainActivity, "Cart", Toast.LENGTH_SHORT).show()
+            }
+        }
+        item.isChecked = true
+        drawerLayout.closeDrawers()
     }
 
     private fun bindWidgets() {
@@ -65,8 +92,9 @@ class MainActivity : AppCompatActivity(){
         navigationView = findViewById(R.id.nav_drawer)
         toolbar = findViewById(R.id.toolbar)
 
-        navigationBar.setItemSelected(R.id.home)
+        navigationBar.setItemSelected(R.id.nav_home)
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(
                 this,
@@ -76,6 +104,7 @@ class MainActivity : AppCompatActivity(){
                 R.string.close_nav
             )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         actionBarDrawerToggle.syncState()
 
         materialSearchView = findViewById(R.id.my_search_bar)
@@ -89,8 +118,15 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true
+        }
         return when(item.itemId) {
             R.id.action_search -> true
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -107,12 +143,22 @@ class MainActivity : AppCompatActivity(){
         navigationBar.setOnItemSelectedListener(object: ChipNavigationBar.OnItemSelectedListener{
             override fun onItemSelected(id: Int) {
                 when(id) {
-                    R.id.home -> loadFragment(ProductFragment())
+                    R.id.nav_home -> loadFragment(ProductFragment())
                     R.id.cart -> loadFragment(CartFragment())
                 }
             }
 
         })
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        actionBarDrawerToggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        actionBarDrawerToggle.onConfigurationChanged(newConfig)
     }
 
     private fun loadFragment(fragment: Fragment) {

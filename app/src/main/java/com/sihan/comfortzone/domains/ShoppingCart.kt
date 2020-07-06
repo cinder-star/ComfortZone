@@ -28,6 +28,15 @@ class ShoppingCart {
             saveCart(cart)
         }
 
+        fun updateItem(product: Product) {
+            val cart = getCart()
+            val targetItem = cart.singleOrNull { it.product.id == product.id }
+            if (targetItem != null) {
+                targetItem.product.price = product.price
+            }
+            saveCart(cart)
+        }
+
         private fun saveCart(cart: MutableList<CartItem>) {
             Paper.book().write("cart", cart)
         }

@@ -9,6 +9,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.sihan.comfortzone.domains.Product
+import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.repositories.MyAdapter
 
 class DataManager(var path: String) {
@@ -23,6 +25,9 @@ class DataManager(var path: String) {
                 snapshot.children.forEach {
                     val t: P? = it.getValue<P>()
                     items.add(t!!)
+                    if (t is Product) {
+                        ShoppingCart.updateItem(t)
+                    }
                 }
                 adapter.setItem(items)
                 adapter.dataChanged()
