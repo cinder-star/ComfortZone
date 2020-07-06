@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity(){
                 navigationBar.setItemSelected(R.id.cart)
                 loadFragment(CartFragment())
             }
+            R.id.picture_order -> {
+                val i: Intent = Intent(this, PhotoOrder::class.java)
+                startActivity(i)
+            }
         }
         item.isChecked = true
         drawerLayout.closeDrawers()
