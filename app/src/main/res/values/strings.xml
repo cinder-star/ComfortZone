@@ -46,4 +46,5 @@
     <string name="product_name">Product name</string>
     <string name="product_image">Product Image</string>
     <string name="_10">10</string>
+    <string name="total_price">Total Price</string>
 </resources>
