@@ -44,4 +44,6 @@
     <string name="bdt_icon">৳</string>
     <string name="product_price">Product price</string>
     <string name="product_name">Product name</string>
+    <string name="product_image">Product Image</string>
+    <string name="_10">10</string>
 </resources>
