@@ -12,19 +12,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Product
+import com.sihan.comfortzone.repositories.OnProductListener
 import com.sihan.comfortzone.utils.ProductAdapter
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Use the [ProductFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductFragment : Fragment() {
+class ProductFragment : Fragment(), OnProductListener {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var productRecyclerView: RecyclerView
 
@@ -54,7 +50,7 @@ class ProductFragment : Fragment() {
         val dataManager = DataManager<Product>()
         val productList = dataManager.getItems()
         swipeRefreshLayout.isRefreshing = false
-        val productAdapter = activity?.let { ProductAdapter(it, productList) }
+        val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
         productRecyclerView.adapter = productAdapter
         productAdapter!!.notifyDataSetChanged()
     }
@@ -63,5 +59,17 @@ class ProductFragment : Fragment() {
         fun newInstance(): ProductFragment {
             return ProductFragment()
         }
+    }
+
+    override fun onProductClicked(position: Int) {
+        loadFragment(SingleProductViewFragment())
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val manager = activity!!.supportFragmentManager.beginTransaction()
+        manager.replace(R.id.fragment_holder, fragment)
+        manager.addToBackStack(null)
+        manager.commit()
     }
 }

@@ -19,7 +19,7 @@ import com.sihan.comfortzone.fragments.ProductFragment
 import io.paperdb.Paper
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     private lateinit var navigationBar: ChipNavigationBar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView

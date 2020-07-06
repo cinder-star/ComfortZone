@@ -13,13 +13,14 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.CartItem
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.domains.ShoppingCart
+import com.sihan.comfortzone.repositories.OnProductListener
 
-class ProductAdapter(var context: Context, private var products: List<Product> = arrayListOf()):
+class ProductAdapter(var context: Context, private var products: List<Product> = arrayListOf(), private var onProductListener: OnProductListener):
         RecyclerView.Adapter<ProductAdapter.ViewHolder> () {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row_product, null)
-        return ViewHolder(view)
+        return ViewHolder(view, onProductListener)
     }
 
     override fun getItemCount(): Int = products.size
@@ -28,7 +29,8 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
         holder.bindProduct(products[position])
     }
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+
+    class ViewHolder(view: View, private var onProductListener: OnProductListener): RecyclerView.ViewHolder(view), View.OnClickListener{
         fun bindProduct(product: Product) {
             itemView.findViewById<TextView>(R.id.product_name).text = product.name
             itemView.findViewById<TextView>(R.id.product_price).text = product.price.toString()
@@ -50,6 +52,11 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            onProductListener.onProductClicked(adapterPosition)
         }
     }
 }
