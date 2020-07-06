@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Product
+import com.sihan.comfortzone.repositories.MyAdapter
 import com.sihan.comfortzone.repositories.OnProductListener
 import com.sihan.comfortzone.utils.ProductAdapter
 
@@ -30,6 +32,7 @@ class ProductFragment : Fragment(), OnProductListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_product, container, false)
         swipeRefreshLayout = view.findViewById(R.id.swipe_bar)
+
         productRecyclerView = view.findViewById(R.id.product_list)
         productRecyclerView.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -38,21 +41,28 @@ class ProductFragment : Fragment(), OnProductListener {
                 it
             )
         }
+        swipeRefreshLayout.isRefreshing = true
         prepareProductView()
+        productRecyclerView.viewTreeObserver
+            .addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    swipeRefreshLayout.isRefreshing = false
+                    productRecyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
         swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
             prepareProductView()
         }
         return view
     }
 
     private fun prepareProductView() {
-        swipeRefreshLayout.isRefreshing = true
-        val dataManager = DataManager<Product>()
-        val productList = dataManager.getItems()
-        swipeRefreshLayout.isRefreshing = false
+        val dataManager = DataManager("/products/foods")
+        val productList: ArrayList<Product> = arrayListOf()
         val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
         productRecyclerView.adapter = productAdapter
-        productAdapter!!.notifyDataSetChanged()
+        dataManager.setListener<Product>(productAdapter!!)
     }
 
     companion object {

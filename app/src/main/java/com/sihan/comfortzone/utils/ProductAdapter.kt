@@ -13,10 +13,11 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.CartItem
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.domains.ShoppingCart
+import com.sihan.comfortzone.repositories.MyAdapter
 import com.sihan.comfortzone.repositories.OnProductListener
 
 class ProductAdapter(var context: Context, private var products: List<Product> = arrayListOf(), private var onProductListener: OnProductListener):
-        RecyclerView.Adapter<ProductAdapter.ViewHolder> () {
+    MyAdapter, RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row_product, null)
@@ -40,7 +41,7 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
                 Snackbar.make(
                     view,
                     "${product.name} added to your cart",
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_SHORT
                 ).show()
             }
             itemView.findViewById<ImageButton>(R.id.removeItem).setOnClickListener{view ->
@@ -49,7 +50,7 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
                 Snackbar.make(
                     view,
                     "${product.name} removed from your cart",
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_SHORT
                 ).show()
             }
             itemView.setOnClickListener(this)
@@ -58,5 +59,14 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
         override fun onClick(p0: View?) {
             onProductListener.onProductClicked(adapterPosition)
         }
+    }
+
+    override fun setItem(items: List<*>) {
+        @Suppress("UNCHECKED_CAST")
+        products = items as List<Product>
+    }
+
+    override fun dataChanged() {
+        this.notifyDataSetChanged()
     }
 }
