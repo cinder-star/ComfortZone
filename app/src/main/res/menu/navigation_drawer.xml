@@ -13,12 +13,15 @@
             android:id="@+id/notification_drawer"
             android:icon="@drawable/ic_bell"
             android:title="@string/home" />
+        <item android:id="@+id/picture_order"
+            android:icon="@drawable/ic_bell"
+            android:title="@string/order_by_photo"/>
         <item
-            android:id="@+id/sign_up_drawer"
+            android:id="@+id/sign_in_drawer"
             android:icon="@drawable/ic_home"
             android:title="@string/home" />
         <item
-            android:id="@+id/sign_in_drawer"
+            android:id="@+id/sign_out_drawer"
             android:icon="@drawable/ic_home"
             android:title="@string/home" />
     </group>

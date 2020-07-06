@@ -4,11 +4,9 @@ import android.app.SearchManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -75,10 +73,12 @@ class MainActivity : AppCompatActivity(){
     private fun selectDrawerItem(item: MenuItem) {
         when(item.itemId) {
             R.id.home_drawer -> {
-                Toast.makeText(this@MainActivity, "home", Toast.LENGTH_SHORT).show()
+                navigationBar.setItemSelected(R.id.nav_home)
+                loadFragment(ProductFragment())
             }
             R.id.cart_drawer -> {
-                Toast.makeText(this@MainActivity, "Cart", Toast.LENGTH_SHORT).show()
+                navigationBar.setItemSelected(R.id.cart)
+                loadFragment(CartFragment())
             }
         }
         item.isChecked = true
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(){
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         actionBarDrawerToggle.syncState()
-
+        navigationView.setCheckedItem(R.id.home_drawer)
         materialSearchView = findViewById(R.id.my_search_bar)
     }
 
@@ -143,8 +143,14 @@ class MainActivity : AppCompatActivity(){
         navigationBar.setOnItemSelectedListener(object: ChipNavigationBar.OnItemSelectedListener{
             override fun onItemSelected(id: Int) {
                 when(id) {
-                    R.id.nav_home -> loadFragment(ProductFragment())
-                    R.id.cart -> loadFragment(CartFragment())
+                    R.id.nav_home -> {
+                        navigationView.setCheckedItem(R.id.home_drawer)
+                        loadFragment(ProductFragment())
+                    }
+                    R.id.cart -> {
+                        navigationView.setCheckedItem(R.id.cart_drawer)
+                        loadFragment(CartFragment())
+                    }
                 }
             }
 
