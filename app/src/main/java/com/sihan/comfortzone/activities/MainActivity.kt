@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity(){
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
-            finishAffinity()
+            super.onBackPressed()
         }
     }
 
