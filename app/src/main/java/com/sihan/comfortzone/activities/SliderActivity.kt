@@ -19,18 +19,8 @@ class SliderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_slider)
-        checkUser()
         bindWidgets()
         bindListeners()
-    }
-
-    private fun checkUser() {
-        val user = Firebase.auth.currentUser
-        if (user != null){
-            val i = Intent(this, MainActivity::class.java)
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
-        }
     }
 
     private fun bindListeners() {

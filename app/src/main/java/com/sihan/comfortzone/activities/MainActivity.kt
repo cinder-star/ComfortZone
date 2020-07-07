@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(){
                 loadFragment(CartFragment())
             }
             R.id.picture_order -> {
-                val i: Intent = Intent(this, PhotoOrder::class.java)
+                val i: Intent = Intent(this, PhotoOrderActivity::class.java)
                 startActivity(i)
             }
         }

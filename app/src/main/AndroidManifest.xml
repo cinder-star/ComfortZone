@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
@@ -17,6 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
+        <activity android:name=".activities.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.sihan.comfortzone"
@@ -24,9 +34,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".activities.PhotoOrder"></activity>
+
+        <activity android:name=".activities.PhotoOrderActivity" />
         <activity android:name=".activities.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -41,13 +52,7 @@
         <activity android:name=".activities.ConfirmPhoneNumber" />
         <activity android:name=".activities.ChooserActivity" />
         <activity android:name=".activities.PhoneLoginActivity" />
-        <activity android:name=".activities.SliderActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activities.SliderActivity"/>
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
