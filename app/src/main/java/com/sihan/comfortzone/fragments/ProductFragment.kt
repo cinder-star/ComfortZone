@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
+import com.sihan.comfortzone.domains.Category
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.repositories.OnProductListener
+import com.sihan.comfortzone.utils.CategoryAdapter
 import com.sihan.comfortzone.utils.ProductAdapter
 
 /**
@@ -23,6 +25,7 @@ import com.sihan.comfortzone.utils.ProductAdapter
 class ProductFragment : Fragment(), OnProductListener {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var productRecyclerView: RecyclerView
+    private lateinit var categoryRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +37,28 @@ class ProductFragment : Fragment(), OnProductListener {
         productRecyclerView = view.findViewById(R.id.product_list)
         productRecyclerView.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        categoryRecyclerView = view.findViewById(R.id.category_list)
+        categoryRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
         activity?.let { ContextCompat.getColor(it, R.color.brand) }?.let {
             swipeRefreshLayout.setColorSchemeColors(
                 it
             )
         }
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+        }
         prepareProductView()
+        prepareCategoryView()
         return view
+    }
+
+    private fun prepareCategoryView() {
+        val dataManager = DataManager("/categories")
+        val categoryList: ArrayList<Category> = arrayListOf()
+        val categoryAdapter = activity?.let { CategoryAdapter(it, categoryList) }
+        categoryRecyclerView.adapter = categoryAdapter
+        dataManager.setListener<Category>(categoryAdapter!!)
     }
 
     private fun prepareProductView() {

@@ -32,7 +32,7 @@ class ShoppingCart {
             val cart = getCart()
             val targetItem = cart.singleOrNull { it.product.id == product.id }
             if (targetItem != null) {
-                targetItem.product.price = product.price
+                targetItem.product = product
             }
             saveCart(cart)
         }
