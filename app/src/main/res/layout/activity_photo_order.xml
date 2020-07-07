@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="Autofill"
-            android:hint="Mobile no."
+            android:hint="Mobile number (i.e: 01XXXXXXXXX)"
             android:inputType="phone" />
         <Button
             android:id="@+id/take_photo"

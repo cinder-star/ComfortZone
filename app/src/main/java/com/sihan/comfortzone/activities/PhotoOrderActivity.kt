@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.ktx.auth
@@ -39,6 +36,9 @@ class PhotoOrderActivity : AppCompatActivity() {
     private var uploadUri: Uri? = null
     private lateinit var relativeLayout: RelativeLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var customerName: TextView
+    private lateinit var customerNumber: TextView
+    private lateinit var customerAddresses: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_order)
@@ -52,6 +52,9 @@ class PhotoOrderActivity : AppCompatActivity() {
         orderButton = findViewById(R.id.send_order)
         relativeLayout = findViewById(R.id.progress_bar_holder)
         progressBar = findViewById(R.id.upload_progress)
+        customerName = findViewById(R.id.customer_name)
+        customerAddresses = findViewById(R.id.customer_address)
+        customerNumber = findViewById(R.id.customer_phone)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -79,29 +82,46 @@ class PhotoOrderActivity : AppCompatActivity() {
         }
 
         orderButton.setOnClickListener {
-            if (uploadName != null) {
+            if (uploadName != null && validate()) {
                 relativeLayout.visibility = View.VISIBLE
                 progressBar.max = 100
                 val userId = Firebase.auth.currentUser!!.uid
                 val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                orderUpload(userId, timeStamp)
+                orderUpload(
+                    userId,
+                    timeStamp,
+                    customerName.text.toString(),
+                    customerAddresses.text.toString(),
+                    customerNumber.text.toString()
+                )
                 fileUpload()
             }
         }
     }
 
-    private fun orderUpload(userId: String, timeStamp: String) {
-        DataWriteManager("photo_orders/$timeStamp", PhotoOrder(
-            "orders/$uploadName",
-            timeStamp,
-            userId
-        )).write()
+    private fun orderUpload(
+        userId: String,
+        timeStamp: String,
+        name: String,
+        address: String,
+        number: String
+    ) {
+        DataWriteManager(
+            "photo_orders/$timeStamp", PhotoOrder(
+                "orders/$uploadName",
+                timeStamp,
+                userId,
+                name,
+                address,
+                number
+            )
+        ).write()
     }
 
     private fun fileUpload() {
-        var bitmap = if (android.os.Build.VERSION.SDK_INT >= 29){
+        var bitmap = if (android.os.Build.VERSION.SDK_INT >= 29) {
             ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.contentResolver, uploadUri!!))
-        } else{
+        } else {
             MediaStore.Images.Media.getBitmap(this.contentResolver, uploadUri)
         }
         val byteOutputStream = ByteArrayOutputStream()
@@ -138,6 +158,26 @@ class PhotoOrderActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun validate(): Boolean {
+        if (customerName.text.toString().isEmpty()) {
+            customerName.error = "Field Cannot be empty"
+            customerName.requestFocus()
+            return false
+        }
+        if (customerAddresses.text.toString().isEmpty()) {
+            customerAddresses.error = "Field Cannot be empty"
+            customerAddresses.requestFocus()
+            return false
+        }
+        val regex = "(01[356789][0-9]{8})".toRegex()
+        val input = customerNumber.text.toString()
+        if (!regex.matches(input)) {
+            customerNumber.error = "Invalid Mobile Number!"
+            return false
+        }
+        return true
     }
 
     @SuppressLint("SimpleDateFormat")
