@@ -3,6 +3,8 @@ package com.sihan.comfortzone.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -14,7 +16,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         Paper.init(this)
-        checkStatus()
+        Handler(Looper.myLooper()!!).postDelayed(Runnable {
+            checkStatus()
+        }, 1500)
     }
 
     private fun checkStatus() {
