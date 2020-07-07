@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun prepareHamburgerMenu() {
-        Log.e("item", "setup")
         navigationView.setNavigationItemSelectedListener { item ->
             selectDrawerItem(item)
             return@setNavigationItemSelectedListener true
@@ -73,10 +72,12 @@ class MainActivity : AppCompatActivity(){
     private fun selectDrawerItem(item: MenuItem) {
         when(item.itemId) {
             R.id.home_drawer -> {
+                item.isChecked = true
                 navigationBar.setItemSelected(R.id.nav_home)
                 loadFragment(ProductFragment())
             }
             R.id.cart_drawer -> {
+                item.isChecked = true
                 navigationBar.setItemSelected(R.id.cart)
                 loadFragment(CartFragment())
             }
@@ -85,12 +86,10 @@ class MainActivity : AppCompatActivity(){
                 startActivity(i)
             }
         }
-        item.isChecked = true
         drawerLayout.closeDrawers()
     }
 
     private fun bindWidgets() {
-        Paper.init(this)
         navigationBar = findViewById(R.id.nav_bar)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_drawer)

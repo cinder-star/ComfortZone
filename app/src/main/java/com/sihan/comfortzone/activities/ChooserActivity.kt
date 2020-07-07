@@ -3,6 +3,7 @@ package com.sihan.comfortzone.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.login.widget.LoginButton
@@ -15,6 +16,7 @@ class ChooserActivity : AppCompatActivity() {
     private lateinit var facebookLoginButton: LoginButton
     private lateinit var facebookLogin: FacebookLogin
     private lateinit var callbackManager: CallbackManager
+    private lateinit var redirect: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chooser)
@@ -30,6 +32,9 @@ class ChooserActivity : AppCompatActivity() {
         phoneNumberSignUp.setOnClickListener {
             startActivity(Intent(this@ChooserActivity, PhoneLoginActivity::class.java))
         }
+        redirect.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
     }
 
     private fun bindWidgets() {
@@ -40,6 +45,7 @@ class ChooserActivity : AppCompatActivity() {
         facebookLogin = FacebookLogin(this, facebookLoginButton, callbackManager)
         facebookLogin.setup()
         phoneNumberSignUp = findViewById(R.id.phone_number_sign_up)
+        redirect = findViewById(R.id.redirect)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
