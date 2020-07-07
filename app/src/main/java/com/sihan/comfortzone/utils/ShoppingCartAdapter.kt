@@ -27,7 +27,6 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: List<Cart
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItem(cartItem: CartItem){
             itemView.findViewById<TextView>(R.id.product_name).text = cartItem.product.name
-            itemView.findViewById<TextView>(R.id.product_price).text = cartItem.product.price.toString()
             itemView.findViewById<TextView>(R.id.product_quantity).text = cartItem.quantity.toString()
         }
     }
