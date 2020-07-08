@@ -49,15 +49,6 @@ class ProductAdapter(var context: Context, private var products: MutableList<Pro
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-            itemView.findViewById<ImageButton>(R.id.removeItem).setOnClickListener{view ->
-                val item = CartItem(product)
-                ShoppingCart.removeItem(item)
-                Snackbar.make(
-                    view,
-                    "${product.name} removed from your cart",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
             itemView.setOnClickListener(this)
             GlideApp.with(context)
                 .load(imageRef)
