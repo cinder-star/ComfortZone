@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.CartItem
 import com.sihan.comfortzone.domains.Product
@@ -27,12 +30,14 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
     override fun getItemCount(): Int = products.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindProduct(products[position])
+        holder.bindProduct(products[position], context)
     }
 
 
     class ViewHolder(view: View, private var onProductListener: OnProductListener): RecyclerView.ViewHolder(view), View.OnClickListener{
-        fun bindProduct(product: Product) {
+        fun bindProduct(product: Product, context: Context) {
+            val productImage: ImageView = itemView.findViewById(R.id.product_image)
+            val imageRef = Firebase.storage.reference.child("products/"+product.imagePath!!)
             itemView.findViewById<TextView>(R.id.product_name).text = product.name
             itemView.findViewById<TextView>(R.id.product_price).text = product.price.toString()
             itemView.findViewById<ImageButton>(R.id.addToCart).setOnClickListener{view ->
@@ -54,6 +59,9 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
                 ).show()
             }
             itemView.setOnClickListener(this)
+            GlideApp.with(context)
+                .load(imageRef)
+                .into(productImage)
         }
 
         override fun onClick(p0: View?) {
