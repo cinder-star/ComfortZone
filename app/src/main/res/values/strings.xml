@@ -39,7 +39,7 @@
     <string name="close_nav">"Close nav drawer"</string>
     <string name="product">product</string>
     <string name="add_to_cart">add_to_cart</string>
-    <string name="checkout">Checkout</string>
+    <string name="checkout">অর্ডার করুন</string>
     <string name="total">Total: </string>
     <string name="bdt_icon">৳</string>
     <string name="product_price">Product price</string>
