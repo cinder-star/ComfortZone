@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/activity_vertical_margin"
-            android:backgroundTint="#1BB564"
+            android:backgroundTint="@color/dark"
             android:text="@string/sign_up_with_phone_number"
             android:textStyle="bold" />
 
