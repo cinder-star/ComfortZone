@@ -30,6 +30,7 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
     }
 
     class ViewHolder(view: View, private val textView: TextView): RecyclerView.ViewHolder(view) {
+        private val totalPriceView: TextView = itemView.findViewById(R.id.total_price)
         fun bindItem(
             cartItem: CartItem,
             context: Context,
@@ -41,6 +42,7 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
             val quantity = itemView.findViewById<TextView>(R.id.product_quantity)
             itemView.findViewById<TextView>(R.id.product_name).text = cartItem.product.name
             quantity.text = cartItem.quantity.toString()
+            totalPriceView.text = (cartItem.quantity * cartItem.product.price!!).toString()
             itemView.findViewById<ImageButton>(R.id.add_one_item).setOnClickListener{
                 ShoppingCart.addItem(cartItem)
                 quantity.text = cartItem.quantity.toString()
@@ -70,6 +72,7 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
             val totalPrice = ShoppingCart.getCart()
                 .fold(0.toDouble()) { acc, cartItem -> acc + cartItem.quantity.times(cartItem.product.price!!.toDouble()) }
             textView.text = totalPrice.toString()
+            totalPriceView.text = totalPrice.toString()
         }
     }
 
