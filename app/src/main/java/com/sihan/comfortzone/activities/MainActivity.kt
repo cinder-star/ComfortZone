@@ -2,11 +2,9 @@ package com.sihan.comfortzone.activities
 
 import android.app.AlertDialog
 import android.app.SearchManager
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,7 +23,6 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.fragments.CartFragment
 import com.sihan.comfortzone.fragments.ProductFragment
-import io.paperdb.Paper
 
 
 class MainActivity : AppCompatActivity(){
@@ -171,9 +168,9 @@ class MainActivity : AppCompatActivity(){
             if (fragName == "productFragment"){
                 AlertDialog.Builder(this)
                     .setMessage("আপনি কি অ্যাপ থেকে প্রস্থান করতে চান?")
-                    .setPositiveButton("হ্যাঁ", DialogInterface.OnClickListener { _, _ ->
+                    .setPositiveButton("হ্যাঁ") { _, _ ->
                         finishAffinity()
-                    })
+                    }
                     .setNegativeButton("না", null)
                     .show()
             } else {

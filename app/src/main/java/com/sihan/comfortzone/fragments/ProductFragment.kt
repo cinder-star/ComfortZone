@@ -63,7 +63,7 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun prepareProductView() {
-        val dataManager = DataManager("/products/foods")
+        val dataManager = DataManager("/products/")
         val productList: MutableList<Product> = mutableListOf()
         val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
         productRecyclerView.adapter = productAdapter
