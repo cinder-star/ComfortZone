@@ -15,7 +15,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.sihan.comfortzone.R
@@ -97,6 +100,13 @@ class MainActivity : AppCompatActivity(){
                 item.isChecked = true
                 navigationBar.setItemSelected(R.id.cart)
                 loadFragment(CartFragment())
+            }
+            R.id.sign_out_drawer -> {
+                Firebase.auth.signOut()
+                LoginManager.getInstance().logOut()
+                val i = Intent(this, ChooserActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
             }
         }
         drawerLayout.closeDrawers()
