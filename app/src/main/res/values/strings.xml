@@ -51,4 +51,6 @@
     <string name="order_by_photo">ছবি তুলে অর্ডার করুন</string>
     <string name="product_category">Product category</string>
     <string name="log_out">লগ আউট</string>
+    <string name="category">ক্যাটাগরি</string>
+    <string name="hot_products">জনপ্রিয় পণ্যসমূহ</string>
 </resources>
