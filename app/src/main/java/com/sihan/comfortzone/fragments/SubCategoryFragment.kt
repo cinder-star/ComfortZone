@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sihan.comfortzone.R
@@ -31,6 +32,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var subCategoryRecyclerView: RecyclerView
+    private lateinit var subCategoryName: TextView
     private lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +68,8 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
         subCategoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        subCategoryName = view.findViewById(R.id.sub_category_name)
+        subCategoryName.text = stack.peek()
     }
 
     companion object {

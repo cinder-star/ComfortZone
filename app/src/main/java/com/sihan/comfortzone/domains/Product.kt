@@ -8,6 +8,6 @@ data class Product (
     var price: Int? = 0,
     var prevPrice: Int? = 0,
     var imagePath: String? = null,
-    var categoryName: String? = null,
+    var category: String? = null,
     var popular: String? = "no"
 ): Serializable

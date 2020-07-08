@@ -26,14 +26,15 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
     override fun getItemCount(): Int = cartItems.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(cartItems[position], context, cartItems)
+        holder.bindItem(cartItems[position], context, cartItems, this)
     }
 
     class ViewHolder(view: View, private val textView: TextView): RecyclerView.ViewHolder(view) {
         fun bindItem(
             cartItem: CartItem,
             context: Context,
-            cartItems: MutableList<CartItem>
+            cartItems: MutableList<CartItem>,
+            shoppingCartAdapter: ShoppingCartAdapter
         ){
             val productImage: ImageView = itemView.findViewById(R.id.product_image)
             val imageRef = Firebase.storage.reference.child("products/"+cartItem.product.imagePath!!)
@@ -50,12 +51,14 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
                 quantity.text = cartItem.quantity.toString()
                 if (cartItem.quantity == 0) {
                     cartItems.removeAt(adapterPosition)
+                    shoppingCartAdapter.notifyDataSetChanged()
                 }
                 updateTotalPrice()
             }
             itemView.findViewById<ImageButton>(R.id.remove_item).setOnClickListener{
                 ShoppingCart.completelyRemoveItem(cartItem)
                 cartItems.removeAt(adapterPosition)
+                shoppingCartAdapter.notifyDataSetChanged()
                 updateTotalPrice()
             }
             GlideApp.with(context)

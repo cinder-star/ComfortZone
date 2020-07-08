@@ -1,5 +1,6 @@
 package com.sihan.comfortzone.database
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -10,8 +11,9 @@ import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.repositories.MyAdapter
 
 class CategoryProduct(private val path: String, private val child: String, private val value: String) {
-    fun addListener(items: MutableList<Product>, adapter: MyAdapter) {
+    fun addListener(adapter: MyAdapter) {
         val databaseReference = Firebase.database.reference.child(path)
+        val items = mutableListOf<Product>()
         databaseReference.orderByChild(child).equalTo(value).addValueEventListener(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
 
@@ -21,6 +23,7 @@ class CategoryProduct(private val path: String, private val child: String, priva
                     val product: Product = it.getValue<Product>() as Product
                     items.add(product)
                 }
+                Log.e("query", items.toString())
                 adapter.setItem(items)
                 adapter.dataChanged()
             }
