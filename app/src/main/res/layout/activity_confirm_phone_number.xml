@@ -3,29 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".activities.ConfirmPhoneNumber">
-    <TextView
-        android:id="@+id/code_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="@string/code"
-        android:textSize="18sp"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/black" />
 
-    <EditText
-        android:id="@+id/code_value"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:inputType="number"
-        android:hint="@string/code_prompt"
-        android:layout_marginBottom="10dp"
-        android:importantForAutofill="no" />
+        android:layout_marginHorizontal="20dp"
+        android:hint="@string/code">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/code_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/confirm_code"
@@ -33,12 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:textSize="20sp"
-        android:text="@string/please_confirm" />
+        android:text="@string/please_confirm"
+        android:textSize="20sp" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
