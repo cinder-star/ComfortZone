@@ -1,6 +1,8 @@
 package com.sihan.comfortzone.activities
 
+import android.app.AlertDialog
 import android.app.SearchManager
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -88,17 +90,13 @@ class MainActivity : AppCompatActivity(){
                 stack.clear()
                 stack.push("productFragment")
                 navigationBar.setItemSelected(R.id.nav_home)
-                val productFragment = ProductFragment()
-                productFragment.arguments = bundle
-                loadFragment(productFragment)
+                loadFragment(ProductFragment())
             }
             R.id.cart_drawer -> {
                 putOnStack("cartFragment")
-                val cartFragment = CartFragment()
-                cartFragment.arguments = bundle
                 item.isChecked = true
                 navigationBar.setItemSelected(R.id.cart)
-                loadFragment(cartFragment)
+                loadFragment(CartFragment())
             }
         }
         drawerLayout.closeDrawers()
@@ -159,9 +157,38 @@ class MainActivity : AppCompatActivity(){
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
-            stack.pop()
-            super.onBackPressed()
+            var fragName = stack.peek()
+            if (fragName == "productFragment"){
+                AlertDialog.Builder(this)
+                    .setMessage("আপনি কি অ্যাপ থেকে প্রস্থান করতে চান?")
+                    .setPositiveButton("হ্যাঁ", DialogInterface.OnClickListener { _, _ ->
+                        finishAffinity()
+                    })
+                    .setNegativeButton("না", null)
+                    .show()
+            } else {
+                stack.pop()
+                fragName = stack.peek()
+                when (fragName) {
+                    "productFragment" -> {
+                        super.onBackPressed()
+                        syncFragments(R.id.nav_home, R.id.home_drawer)
+                    }
+                    "cartFragment" -> {
+                        super.onBackPressed()
+                        syncFragments(R.id.cart, R.id.cart_drawer)
+                    }
+                    else -> {
+                        super.onBackPressed()
+                    }
+                }
+            }
         }
+    }
+
+    private fun syncFragments(bottomId: Int, humBurgerId: Int) {
+        navigationBar.setItemSelected(bottomId)
+        navigationView.setCheckedItem(humBurgerId)
     }
 
     private fun prepareBottomNavBar(){
@@ -171,17 +198,13 @@ class MainActivity : AppCompatActivity(){
                     R.id.nav_home -> {
                         stack.clear()
                         stack.push("productFragment")
-                        val productFragment = ProductFragment()
-                        productFragment.arguments = bundle
                         navigationView.setCheckedItem(R.id.home_drawer)
-                        loadFragment(productFragment)
+                        loadFragment(ProductFragment())
                     }
                     R.id.cart -> {
                         putOnStack("cartFragment")
-                        val cartFragment = CartFragment()
-                        cartFragment.arguments = bundle
                         navigationView.setCheckedItem(R.id.cart_drawer)
-                        loadFragment(cartFragment)
+                        loadFragment(CartFragment())
                     }
                 }
             }
@@ -200,6 +223,7 @@ class MainActivity : AppCompatActivity(){
 
     private fun loadFragment(fragment: Fragment) {
         // load fragment
+        fragment.arguments = bundle
         val manager = supportFragmentManager.beginTransaction()
         manager.replace(R.id.fragment_holder, fragment)
         manager.addToBackStack(null)
@@ -208,7 +232,6 @@ class MainActivity : AppCompatActivity(){
 
     private fun putOnStack(string: String) {
         val top = stack.peek()
-        Log.e("stack", stack.toString())
         if (top == null || string != stack.peek()) {
             stack.push(string)
         }

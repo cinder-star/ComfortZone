@@ -54,4 +54,6 @@
     <string name="category">ক্যাটাগরি</string>
     <string name="hot_products">জনপ্রিয় পণ্যসমূহ</string>
     <string name="photo_order">Photo Order</string>
+    <string name="_0">0</string>
+    <string name="put_in_your_basket">আপনার ঝুড়িতে রাখুন</string>
 </resources>

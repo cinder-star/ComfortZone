@@ -53,6 +53,11 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
                 }
                 updateTotalPrice()
             }
+            itemView.findViewById<ImageButton>(R.id.remove_item).setOnClickListener{
+                ShoppingCart.completelyRemoveItem(cartItem)
+                cartItems.removeAt(adapterPosition)
+                updateTotalPrice()
+            }
             GlideApp.with(context)
                 .load(imageRef)
                 .into(productImage)

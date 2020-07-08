@@ -1,11 +1,22 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.domains.Product
+import com.sihan.comfortzone.domains.ShoppingCart
+import com.sihan.comfortzone.utils.GlideApp
+import kotlin.math.max
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +32,17 @@ class SingleProductViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var plusButton: ImageButton
+    private lateinit var minusButton: ImageButton
+    private lateinit var removeButton: ImageButton
+    private lateinit var addToCartButton: Button
+    private lateinit var product: Product
+    private lateinit var productImage: ImageView
+    private lateinit var productName: TextView
+    private lateinit var productPrice: TextView
+    private lateinit var totalPrice: TextView
+    private lateinit var quantity: TextView
+    private lateinit var imageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +57,50 @@ class SingleProductViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single_product_view, container, false)
+        val view = inflater.inflate(R.layout.fragment_single_product_view, container, false)
+        bindWidgets(view!!)
+        bindListeners()
+        return view
+    }
+
+    private fun bindWidgets(view: View) {
+        plusButton = view.findViewById(R.id.add_one_item)
+        minusButton = view.findViewById(R.id.minus_one_item)
+        removeButton = view.findViewById(R.id.remove_item)
+        quantity = view.findViewById(R.id.product_quantity)
+        productName = view.findViewById(R.id.product_name)
+        productPrice = view.findViewById(R.id.product_price)
+        productImage = view.findViewById(R.id.product_image)
+        totalPrice = view.findViewById(R.id.total_price)
+        addToCartButton = view.findViewById(R.id.add_to_cart)
+        product = this.arguments!!.getSerializable("product") as Product
+        imageRef = Firebase.storage.reference.child("products/"+product.imagePath)
+    }
+
+    private fun bindListeners() {
+        quantity.text = "0"
+        productName.text = product.name!!
+        productPrice.text = product.price.toString()
+        totalPrice.text = "0"
+        GlideApp.with(activity!!)
+            .load(imageRef)
+            .into(productImage)
+        plusButton.setOnClickListener {
+            quantity.text = (quantity.text.toString().toInt() + 1).toString()
+            updatePrice()
+        }
+        minusButton.setOnClickListener {
+            quantity.text = max(quantity.text.toString().toInt() - 1, 0).toString()
+            updatePrice()
+        }
+        addToCartButton.setOnClickListener {
+            ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
+            activity!!.onBackPressed()
+        }
+    }
+
+    private fun updatePrice() {
+        totalPrice.text = (quantity.text.toString().toInt() * product.price!!).toString()
     }
 
     companion object {

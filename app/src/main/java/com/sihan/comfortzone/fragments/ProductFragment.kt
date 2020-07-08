@@ -78,7 +78,9 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
 
     override fun onProductClicked(product: Product) {
         val bundle = Bundle()
+        stack.push("singleProductFragment")
         bundle.putSerializable("product", product)
+        bundle.putSerializable("stack", stack)
         loadFragment(SingleProductViewFragment(), bundle)
     }
 

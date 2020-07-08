@@ -17,6 +17,17 @@ class ShoppingCart {
             saveCart(cart)
         }
 
+        fun bulkAdd(product: Product, quantity: Int) {
+            val cart = getCart()
+            val targetItem = cart.singleOrNull { it.product.id == product.id }
+            if (targetItem == null) {
+                cart.add(CartItem(product, quantity))
+            } else {
+                targetItem.quantity += quantity
+            }
+            saveCart(cart)
+        }
+
         fun removeItem(cartItem: CartItem) {
             val cart = getCart()
             val targetItem = cart.singleOrNull { it.product.id == cartItem.product.id }
@@ -26,6 +37,15 @@ class ShoppingCart {
                 if (targetItem.quantity == 0){
                     cart.remove(targetItem)
                 }
+            }
+            saveCart(cart)
+        }
+
+        fun completelyRemoveItem(cartItem: CartItem) {
+            val cart = getCart()
+            val targetItem = cart.singleOrNull { it.product.id == cartItem.product.id }
+            if (targetItem != null) {
+                cart.remove(targetItem)
             }
             saveCart(cart)
         }

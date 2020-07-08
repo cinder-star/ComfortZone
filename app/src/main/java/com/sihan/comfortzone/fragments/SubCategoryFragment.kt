@@ -102,7 +102,6 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
         stack.push(category.name!!)
         bundle.putSerializable("stack", stack)
         if (category.subCategory == "yes") {
-
             loadFragment(SubCategoryFragment(), bundle)
         } else{
             loadFragment(CategoryProductFragment(), bundle)
