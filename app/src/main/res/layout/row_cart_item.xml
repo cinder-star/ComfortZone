@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/product_name"
-            android:textColor="@android:color/black"
+            android:textColor="@color/dark"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/product_image"
@@ -71,10 +71,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#00ffffff"
+                android:background="@drawable/button_bg_transparent"
                 android:padding="5dp"
                 android:src="@drawable/ic_trash"
-                android:tint="@android:color/black"
+                android:tint="@color/dark"
                 card_view:ignore="ContentDescription" />
 
             <ImageButton
@@ -85,7 +85,7 @@
                 android:background="@drawable/button_bg_gray"
                 android:padding="5dp"
                 android:src="@drawable/ic_minus_circle"
-                android:tint="@android:color/black"
+                android:tint="@color/dark"
                 card_view:ignore="ContentDescription" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="@string/_10"
-                android:textColor="@android:color/black"
+                android:textColor="@color/dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
                 android:background="@drawable/button_bg_red"
                 android:padding="5dp"
                 android:src="@drawable/ic_plus_circle"
-                android:tint="@android:color/white"
+                android:tint="@color/bg_color"
                 card_view:ignore="ContentDescription" />
         </LinearLayout>
 

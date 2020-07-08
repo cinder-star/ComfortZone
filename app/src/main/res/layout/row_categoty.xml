@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:text="@string/product_category"
-        android:textColor="@color/black"
+        android:textColor="@color/dark"
         android:textSize="16sp" />
 
 

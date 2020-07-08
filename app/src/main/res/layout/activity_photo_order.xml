@@ -17,6 +17,7 @@
         android:foregroundGravity="center"
         android:padding="10dp"
         android:scaleType="fitStart"
+        android:tint="@color/dark"
         android:src="@drawable/ic_camera"
         app:layout_constraintBottom_toTopOf="@+id/linear"
         app:layout_constraintEnd_toEndOf="parent"
