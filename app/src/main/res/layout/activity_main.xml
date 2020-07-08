@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <FrameLayout
             android:id="@+id/toolbar_holder"
             android:layout_width="match_parent"
@@ -23,20 +23,21 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AppTheme.AppBarOverlay"
-                android:background="@color/brand"/>
-            
+                android:background="@color/brand"
+                android:theme="@style/AppTheme.AppBarOverlay" />
+
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/my_search_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </FrameLayout>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_holder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/nav_bar"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_holder"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_holder" />
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/nav_bar"
@@ -45,10 +46,11 @@
             android:background="@color/ghost_red"
             android:elevation="16dp"
             app:cnb_menuResource="@menu/bottom_nav"
-            app:cnb_unselectedColor="#000"
+            app:cnb_unselectedColor="@color/dark"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_drawer"
         android:layout_width="wrap_content"
