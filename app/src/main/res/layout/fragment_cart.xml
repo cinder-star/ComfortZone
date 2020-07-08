@@ -8,6 +8,18 @@
     android:background="@color/bg_color"
     tools:context=".fragments.CartFragment">
 
+    <TextView
+        android:id="@+id/cart_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/cart"
+        android:textColor="@color/brand"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shopping_cart_recyclerView"
         android:layout_width="0dp"
@@ -16,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/cart_description" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,13 +81,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlCompat" />
 
-
         <Button
             android:id="@+id/checkout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/button_bg_transparent"
+            android:background="@drawable/button_bg_white"
             android:backgroundTint="@color/white"
             android:padding="5dp"
             android:text="@string/checkout"
