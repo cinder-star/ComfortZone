@@ -6,4 +6,8 @@
         android:icon="@drawable/ic_search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom|collapseActionView"/>
+    <item android:id="@+id/photo_order"
+        android:title="@string/photo_order"
+        android:icon="@drawable/ic_camera_white"
+        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>

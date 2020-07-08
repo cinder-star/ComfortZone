@@ -100,10 +100,6 @@ class MainActivity : AppCompatActivity(){
                 navigationBar.setItemSelected(R.id.cart)
                 loadFragment(cartFragment)
             }
-            R.id.picture_order -> {
-                val i = Intent(this, PhotoOrderActivity::class.java)
-                startActivity(i)
-            }
         }
         drawerLayout.closeDrawers()
     }
@@ -146,6 +142,11 @@ class MainActivity : AppCompatActivity(){
         }
         return when(item.itemId) {
             R.id.action_search -> true
+            R.id.photo_order -> {
+                val i = Intent(this, PhotoOrderActivity::class.java)
+                startActivity(i)
+                true
+            }
             android.R.id.home -> {
                 drawerLayout.openDrawer(GravityCompat.START)
                 true
