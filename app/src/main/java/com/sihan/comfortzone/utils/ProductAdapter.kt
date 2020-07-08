@@ -2,6 +2,7 @@ package com.sihan.comfortzone.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,11 @@ import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.repositories.MyAdapter
 import com.sihan.comfortzone.repositories.OnProductListener
 
-class ProductAdapter(var context: Context, private var products: MutableList<Product> = arrayListOf(), private var onProductListener: OnProductListener):
+class ProductAdapter(
+    var context: Context,
+    private var products: MutableList<Product> = arrayListOf(),
+    private var onProductListener: OnProductListener
+) :
     MyAdapter, RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,13 +39,20 @@ class ProductAdapter(var context: Context, private var products: MutableList<Pro
     }
 
 
-    class ViewHolder(view: View, private var onProductListener: OnProductListener, private var products: MutableList<Product>): RecyclerView.ViewHolder(view), View.OnClickListener{
+    class ViewHolder(
+        view: View,
+        private var onProductListener: OnProductListener,
+        private var products: MutableList<Product>
+    ) : RecyclerView.ViewHolder(view), View.OnClickListener {
         fun bindProduct(product: Product, context: Context) {
             val productImage: ImageView = itemView.findViewById(R.id.product_image)
-            val imageRef = Firebase.storage.reference.child("products/"+product.imagePath!!)
+            val imageRef = Firebase.storage.reference.child("products/" + product.imagePath!!)
             itemView.findViewById<TextView>(R.id.product_name).text = product.name
             itemView.findViewById<TextView>(R.id.product_price).text = product.price.toString()
-            itemView.findViewById<ImageButton>(R.id.addToCart).setOnClickListener{view ->
+            itemView.findViewById<TextView>(R.id.old_product_price).text = product.price.toString()
+            itemView.findViewById<TextView>(R.id.old_product_price).paintFlags =
+                Paint.STRIKE_THRU_TEXT_FLAG
+            itemView.findViewById<ImageButton>(R.id.addToCart).setOnClickListener { view ->
                 val item = CartItem(product)
                 ShoppingCart.addItem(item)
                 Snackbar.make(
