@@ -49,4 +49,5 @@
     <string name="total_price">Total Price</string>
     <string name="login_chooser">লগইন করুন</string>
     <string name="order_by_photo">ছবি তুলে অর্ডার করুন</string>
+    <string name="product_category">Product category</string>
 </resources>

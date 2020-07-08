@@ -39,7 +39,7 @@ class ProductFragment : Fragment(), OnProductListener {
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         categoryRecyclerView = view.findViewById(R.id.category_list)
         categoryRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         activity?.let { ContextCompat.getColor(it, R.color.brand) }?.let {
             swipeRefreshLayout.setColorSchemeColors(
                 it
