@@ -42,7 +42,7 @@
             android:id="@+id/nav_bar"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="#ffeefe"
+            android:background="@color/ghost_red"
             android:elevation="16dp"
             app:cnb_menuResource="@menu/bottom_nav"
             app:cnb_unselectedColor="#000"
