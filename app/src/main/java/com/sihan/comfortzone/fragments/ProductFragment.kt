@@ -13,16 +13,18 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
 import com.sihan.comfortzone.domains.Product
+import com.sihan.comfortzone.repositories.OnCategoryListener
 import com.sihan.comfortzone.repositories.OnProductListener
 import com.sihan.comfortzone.utils.CategoryAdapter
 import com.sihan.comfortzone.utils.ProductAdapter
+import io.paperdb.Paper
 
 /**
  * A simple [Fragment] subclass.
  * Use the [ProductFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductFragment : Fragment(), OnProductListener {
+class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var productRecyclerView: RecyclerView
     private lateinit var categoryRecyclerView: RecyclerView
@@ -56,7 +58,7 @@ class ProductFragment : Fragment(), OnProductListener {
     private fun prepareCategoryView() {
         val dataManager = DataManager("/categories")
         val categoryList: ArrayList<Category> = arrayListOf()
-        val categoryAdapter = activity?.let { CategoryAdapter(it, categoryList) }
+        val categoryAdapter = activity?.let { CategoryAdapter(it, categoryList, this) }
         categoryRecyclerView.adapter = categoryAdapter
         dataManager.setListener<Category>(categoryAdapter!!)
     }
@@ -85,5 +87,14 @@ class ProductFragment : Fragment(), OnProductListener {
         manager.replace(R.id.fragment_holder, fragment)
         manager.addToBackStack(null)
         manager.commit()
+    }
+
+    override fun onCategoryClicked(category: Category) {
+        if (category.subCategory == "yes") {
+            Paper.book().write("sub-category", category.name)
+            loadFragment(SubCategoryFragment())
+        } else{
+            loadFragment(CategoryProductFragment())
+        }
     }
 }

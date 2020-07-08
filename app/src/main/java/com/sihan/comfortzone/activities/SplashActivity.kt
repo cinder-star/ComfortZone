@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         Paper.init(this)
         Handler(Looper.myLooper()!!).postDelayed(Runnable {
             checkStatus()
-        }, 1500)
+        }, 750)
     }
 
     private fun checkStatus() {

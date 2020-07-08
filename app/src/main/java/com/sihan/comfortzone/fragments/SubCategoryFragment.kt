@@ -6,7 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.database.DataManager
+import com.sihan.comfortzone.domains.Category
+import com.sihan.comfortzone.repositories.OnCategoryListener
+import com.sihan.comfortzone.utils.CategoryAdapter
+import io.paperdb.Paper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SubCategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubCategoryFragment : Fragment() {
+class SubCategoryFragment : Fragment(), OnCategoryListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -39,11 +45,23 @@ class SubCategoryFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sub_category, container, false)
         bindWidgets(view!!)
+        prepareSubcategory()
         return view
+    }
+
+    private fun prepareSubcategory() {
+        val category: String = Paper.book().read("sub-category", "*")
+        val dataManager = DataManager("/subCategories/$category")
+        val subCategoryList: ArrayList<Category> = arrayListOf()
+        val subCategoryAdapter = activity?.let { CategoryAdapter(it, subCategoryList, this) }
+        subCategoryRecyclerView.adapter = subCategoryAdapter
+        dataManager.setListener<Category>(subCategoryAdapter!!)
     }
 
     private fun bindWidgets(view: View) {
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
+        subCategoryRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
     }
 
     companion object {
@@ -64,5 +82,22 @@ class SubCategoryFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val manager = activity!!.supportFragmentManager.beginTransaction()
+        manager.replace(R.id.fragment_holder, fragment)
+        manager.addToBackStack(null)
+        manager.commit()
+    }
+
+    override fun onCategoryClicked(category: Category) {
+        if (category.subCategory == "yes") {
+            Paper.book().write("sub-category", category.name)
+            loadFragment(SubCategoryFragment())
+        } else{
+            loadFragment(CategoryProductFragment())
+        }
     }
 }
