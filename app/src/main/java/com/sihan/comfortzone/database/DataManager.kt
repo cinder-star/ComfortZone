@@ -1,7 +1,5 @@
 package com.sihan.comfortzone.database
 
-import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -15,7 +13,7 @@ import com.sihan.comfortzone.repositories.MyAdapter
 
 class DataManager(var path: String) {
     inline fun <reified P : Any> setListener(adapter: MyAdapter) {
-        val items: ArrayList<P> = arrayListOf()
+        val items: MutableList<P> = arrayListOf()
         val reference: DatabaseReference = Firebase.database.reference.child(path)
         reference.addValueEventListener(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}

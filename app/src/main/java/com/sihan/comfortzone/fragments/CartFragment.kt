@@ -29,6 +29,7 @@ class CartFragment : Fragment() {
     private var param2: String? = null
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: ShoppingCartAdapter
+    private lateinit var totalPriceView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +44,14 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
-        Log.e("stack", this.arguments!!.getSerializable("stack").toString())
+        bindWidgets(view)
         setupCartView(view)
         calculatePrice(view)
         return view
+    }
+
+    private fun bindWidgets(view: View?) {
+        totalPriceView = view!!.findViewById(R.id.total_price)
     }
 
     private fun calculatePrice(view: View?) {
@@ -57,7 +62,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setupCartView(view: View?) {
-        cartAdapter = activity?.let { ShoppingCartAdapter(it, ShoppingCart.getCart()) }!!
+        cartAdapter = activity?.let { ShoppingCartAdapter(it, ShoppingCart.getCart(), totalPriceView) }!!
         cartAdapter.notifyDataSetChanged()
         cartRecyclerView = view!!.findViewById(R.id.shopping_cart_recyclerView)
         cartRecyclerView.adapter = cartAdapter

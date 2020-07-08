@@ -45,7 +45,6 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     private fun bindWidgets(view: View) {
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
-        Log.e("stack", stack.toString())
 
         productRecyclerView = view.findViewById(R.id.product_list)
         productRecyclerView.layoutManager =
@@ -57,7 +56,7 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
 
     private fun prepareCategoryView() {
         val dataManager = DataManager("/categories")
-        val categoryList: ArrayList<Category> = arrayListOf()
+        val categoryList: MutableList<Category> = mutableListOf()
         val categoryAdapter = activity?.let { CategoryAdapter(it, categoryList, this) }
         categoryRecyclerView.adapter = categoryAdapter
         dataManager.setListener<Category>(categoryAdapter!!)
@@ -65,7 +64,7 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
 
     private fun prepareProductView() {
         val dataManager = DataManager("/products/foods")
-        val productList: ArrayList<Product> = arrayListOf()
+        val productList: MutableList<Product> = mutableListOf()
         val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
         productRecyclerView.adapter = productAdapter
         dataManager.setListener<Product>(productAdapter!!)
@@ -77,9 +76,9 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
         }
     }
 
-    override fun onProductClicked(position: Int) {
+    override fun onProductClicked(product: Product) {
         val bundle = Bundle()
-        stack.push("*")
+        bundle.putSerializable("product", product)
         loadFragment(SingleProductViewFragment(), bundle)
     }
 

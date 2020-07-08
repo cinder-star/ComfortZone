@@ -11,6 +11,7 @@ class ShoppingCart {
                 cartItem.quantity++
                 cart.add(cartItem)
             } else {
+                cartItem.quantity++
                 targetItem.quantity++
             }
             saveCart(cart)
@@ -20,6 +21,7 @@ class ShoppingCart {
             val cart = getCart()
             val targetItem = cart.singleOrNull { it.product.id == cartItem.product.id }
             if (targetItem != null) {
+                cartItem.quantity--
                 targetItem.quantity--
                 if (targetItem.quantity == 0){
                     cart.remove(targetItem)

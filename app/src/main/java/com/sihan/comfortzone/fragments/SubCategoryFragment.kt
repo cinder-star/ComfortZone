@@ -54,7 +54,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
 
     private fun prepareSubcategory() {
         val dataManager = DataManager("/subCategories/"+stack.peek())
-        val subCategoryList: ArrayList<Category> = arrayListOf()
+        val subCategoryList: MutableList<Category> = mutableListOf()
         val subCategoryAdapter = activity?.let { CategoryAdapter(it, subCategoryList, this) }
         subCategoryRecyclerView.adapter = subCategoryAdapter
         dataManager.setListener<Category>(subCategoryAdapter!!)
@@ -63,7 +63,6 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private fun bindWidgets(view: View) {
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
-        Log.e("stack", stack.toString())
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
         subCategoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)

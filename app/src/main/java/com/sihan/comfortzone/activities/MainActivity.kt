@@ -84,12 +84,12 @@ class MainActivity : AppCompatActivity(){
     private fun selectDrawerItem(item: MenuItem) {
         when(item.itemId) {
             R.id.home_drawer -> {
+                item.isChecked = true
                 stack.clear()
-                putOnStack("productFragment")
+                stack.push("productFragment")
+                navigationBar.setItemSelected(R.id.nav_home)
                 val productFragment = ProductFragment()
                 productFragment.arguments = bundle
-                item.isChecked = true
-                navigationBar.setItemSelected(R.id.nav_home)
                 loadFragment(productFragment)
             }
             R.id.cart_drawer -> {
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity(){
                 when(id) {
                     R.id.nav_home -> {
                         stack.clear()
-                        putOnStack("productFragment")
+                        stack.push("productFragment")
                         val productFragment = ProductFragment()
                         productFragment.arguments = bundle
                         navigationView.setCheckedItem(R.id.home_drawer)
@@ -208,7 +208,8 @@ class MainActivity : AppCompatActivity(){
 
     private fun putOnStack(string: String) {
         val top = stack.peek()
-        if (top != null && string != stack.peek()) {
+        Log.e("stack", stack.toString())
+        if (top == null || string != stack.peek()) {
             stack.push(string)
         }
     }

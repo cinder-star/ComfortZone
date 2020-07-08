@@ -19,12 +19,12 @@ import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.repositories.MyAdapter
 import com.sihan.comfortzone.repositories.OnProductListener
 
-class ProductAdapter(var context: Context, private var products: List<Product> = arrayListOf(), private var onProductListener: OnProductListener):
+class ProductAdapter(var context: Context, private var products: MutableList<Product> = arrayListOf(), private var onProductListener: OnProductListener):
     MyAdapter, RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row_product, null)
-        return ViewHolder(view, onProductListener)
+        return ViewHolder(view, onProductListener, products)
     }
 
     override fun getItemCount(): Int = products.size
@@ -34,7 +34,7 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
     }
 
 
-    class ViewHolder(view: View, private var onProductListener: OnProductListener): RecyclerView.ViewHolder(view), View.OnClickListener{
+    class ViewHolder(view: View, private var onProductListener: OnProductListener, private var products: MutableList<Product>): RecyclerView.ViewHolder(view), View.OnClickListener{
         fun bindProduct(product: Product, context: Context) {
             val productImage: ImageView = itemView.findViewById(R.id.product_image)
             val imageRef = Firebase.storage.reference.child("products/"+product.imagePath!!)
@@ -65,13 +65,13 @@ class ProductAdapter(var context: Context, private var products: List<Product> =
         }
 
         override fun onClick(p0: View?) {
-            onProductListener.onProductClicked(adapterPosition)
+            onProductListener.onProductClicked(products[adapterPosition])
         }
     }
 
     override fun setItem(items: List<*>) {
         @Suppress("UNCHECKED_CAST")
-        products = items as List<Product>
+        products = items as MutableList<Product>
     }
 
     override fun dataChanged() {
