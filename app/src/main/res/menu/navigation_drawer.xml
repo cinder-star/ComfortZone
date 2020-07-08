@@ -12,17 +12,14 @@
         <item
             android:id="@+id/notification_drawer"
             android:icon="@drawable/ic_bell"
-            android:title="@string/home" />
-        <item android:id="@+id/picture_order"
-            android:icon="@drawable/ic_bell"
+            android:title="@string/notifications" />
+        <item
+            android:id="@+id/picture_order"
+            android:icon="@drawable/ic_camera"
             android:title="@string/order_by_photo"/>
         <item
-            android:id="@+id/sign_in_drawer"
-            android:icon="@drawable/ic_home"
-            android:title="@string/home" />
-        <item
             android:id="@+id/sign_out_drawer"
-            android:icon="@drawable/ic_home"
-            android:title="@string/home" />
+            android:icon="@drawable/ic_log_out"
+            android:title="@string/log_out" />
     </group>
 </menu>
