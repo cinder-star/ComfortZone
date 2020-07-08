@@ -74,7 +74,7 @@
                 android:background="@drawable/button_bg_transparent"
                 android:padding="5dp"
                 android:src="@drawable/ic_trash"
-                android:tint="@color/dark"
+                android:tint="@color/brand"
                 card_view:ignore="ContentDescription" />
 
             <ImageButton
@@ -85,7 +85,7 @@
                 android:background="@drawable/button_bg_ghost"
                 android:padding="5dp"
                 android:src="@drawable/ic_minus_circle"
-                android:tint="@color/dark"
+                android:tint="@color/brand"
                 card_view:ignore="ContentDescription" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="@drawable/button_bg_red"
+                android:background="@drawable/button_bg_dark"
                 android:padding="5dp"
                 android:src="@drawable/ic_plus_circle"
                 android:tint="@color/bg_color"
