@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
+import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.repositories.OnCategoryListener
 import com.sihan.comfortzone.utils.CategoryAdapter
 import io.paperdb.Paper
@@ -29,6 +31,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var subCategoryRecyclerView: RecyclerView
+    private lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +53,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     private fun prepareSubcategory() {
-        val category: String = Paper.book().read("sub-category", "*")
-        val dataManager = DataManager("/subCategories/$category")
+        val dataManager = DataManager("/subCategories/"+stack.peek())
         val subCategoryList: ArrayList<Category> = arrayListOf()
         val subCategoryAdapter = activity?.let { CategoryAdapter(it, subCategoryList, this) }
         subCategoryRecyclerView.adapter = subCategoryAdapter
@@ -59,6 +61,9 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     private fun bindWidgets(view: View) {
+        @Suppress("UNCHECKED_CAST")
+        stack = this.arguments!!.getSerializable("stack") as MyStack<String>
+        Log.e("stack", stack.toString())
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
         subCategoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
@@ -84,8 +89,9 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
             }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment, bundle: Bundle) {
         // load fragment
+        fragment.arguments = bundle
         val manager = activity!!.supportFragmentManager.beginTransaction()
         manager.replace(R.id.fragment_holder, fragment)
         manager.addToBackStack(null)
@@ -93,11 +99,14 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     override fun onCategoryClicked(category: Category) {
+        val bundle = Bundle()
+        stack.push(category.name!!)
+        bundle.putSerializable("stack", stack)
         if (category.subCategory == "yes") {
-            Paper.book().write("sub-category", category.name)
-            loadFragment(SubCategoryFragment())
+
+            loadFragment(SubCategoryFragment(), bundle)
         } else{
-            loadFragment(CategoryProductFragment())
+            loadFragment(CategoryProductFragment(), bundle)
         }
     }
 }

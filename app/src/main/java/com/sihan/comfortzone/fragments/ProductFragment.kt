@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
+import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.repositories.OnCategoryListener
 import com.sihan.comfortzone.repositories.OnProductListener
@@ -25,16 +27,25 @@ import io.paperdb.Paper
  * create an instance of this fragment.
  */
 class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var productRecyclerView: RecyclerView
     private lateinit var categoryRecyclerView: RecyclerView
+    private lateinit var stack: MyStack<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_product, container, false)
-        swipeRefreshLayout = view.findViewById(R.id.swipe_bar)
+        bindWidgets(view)
+        prepareProductView()
+        prepareCategoryView()
+        return view
+    }
+
+    private fun bindWidgets(view: View) {
+        @Suppress("UNCHECKED_CAST")
+        stack = this.arguments!!.getSerializable("stack") as MyStack<String>
+        Log.e("stack", stack.toString())
 
         productRecyclerView = view.findViewById(R.id.product_list)
         productRecyclerView.layoutManager =
@@ -42,17 +53,6 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
         categoryRecyclerView = view.findViewById(R.id.category_list)
         categoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        activity?.let { ContextCompat.getColor(it, R.color.brand) }?.let {
-            swipeRefreshLayout.setColorSchemeColors(
-                it
-            )
-        }
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = false
-        }
-        prepareProductView()
-        prepareCategoryView()
-        return view
     }
 
     private fun prepareCategoryView() {
@@ -78,11 +78,14 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     override fun onProductClicked(position: Int) {
-        loadFragment(SingleProductViewFragment())
+        val bundle = Bundle()
+        stack.push("*")
+        loadFragment(SingleProductViewFragment(), bundle)
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment, bundle: Bundle) {
         // load fragment
+        fragment.arguments = bundle
         val manager = activity!!.supportFragmentManager.beginTransaction()
         manager.replace(R.id.fragment_holder, fragment)
         manager.addToBackStack(null)
@@ -90,11 +93,13 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     override fun onCategoryClicked(category: Category) {
+        val bundle = Bundle()
+        stack.push(category.name!!)
+        bundle.putSerializable("stack", stack)
         if (category.subCategory == "yes") {
-            Paper.book().write("sub-category", category.name)
-            loadFragment(SubCategoryFragment())
+            loadFragment(SubCategoryFragment(), bundle)
         } else{
-            loadFragment(CategoryProductFragment())
+            loadFragment(CategoryProductFragment(), bundle)
         }
     }
 }

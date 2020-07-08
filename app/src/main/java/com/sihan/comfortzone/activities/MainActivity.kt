@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.fragments.CartFragment
 import com.sihan.comfortzone.fragments.ProductFragment
 import io.paperdb.Paper
@@ -29,13 +30,24 @@ class MainActivity : AppCompatActivity(){
     private lateinit var toolbar: Toolbar
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var materialSearchView: MaterialSearchView
+    private var bundle: Bundle = Bundle()
+    lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bindWidgets()
         bindListeners()
-        loadFragment(ProductFragment())
+        loadInitialFragment()
+    }
+
+    private fun loadInitialFragment() {
+        stack.clear()
+        stack.push("productFragment")
+        bundle.putSerializable("stack", stack)
+        val productFragment = ProductFragment()
+        productFragment.arguments = bundle
+        loadFragment(productFragment)
     }
 
     private fun bindListeners() {
@@ -72,14 +84,21 @@ class MainActivity : AppCompatActivity(){
     private fun selectDrawerItem(item: MenuItem) {
         when(item.itemId) {
             R.id.home_drawer -> {
+                stack.clear()
+                putOnStack("productFragment")
+                val productFragment = ProductFragment()
+                productFragment.arguments = bundle
                 item.isChecked = true
                 navigationBar.setItemSelected(R.id.nav_home)
-                loadFragment(ProductFragment())
+                loadFragment(productFragment)
             }
             R.id.cart_drawer -> {
+                putOnStack("cartFragment")
+                val cartFragment = CartFragment()
+                cartFragment.arguments = bundle
                 item.isChecked = true
                 navigationBar.setItemSelected(R.id.cart)
-                loadFragment(CartFragment())
+                loadFragment(cartFragment)
             }
             R.id.picture_order -> {
                 val i = Intent(this, PhotoOrderActivity::class.java)
@@ -94,6 +113,7 @@ class MainActivity : AppCompatActivity(){
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_drawer)
         toolbar = findViewById(R.id.toolbar)
+        stack = MyStack()
 
         navigationBar.setItemSelected(R.id.nav_home)
         setSupportActionBar(toolbar)
@@ -138,6 +158,7 @@ class MainActivity : AppCompatActivity(){
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
+            stack.pop()
             super.onBackPressed()
         }
     }
@@ -147,12 +168,19 @@ class MainActivity : AppCompatActivity(){
             override fun onItemSelected(id: Int) {
                 when(id) {
                     R.id.nav_home -> {
+                        stack.clear()
+                        putOnStack("productFragment")
+                        val productFragment = ProductFragment()
+                        productFragment.arguments = bundle
                         navigationView.setCheckedItem(R.id.home_drawer)
-                        loadFragment(ProductFragment())
+                        loadFragment(productFragment)
                     }
                     R.id.cart -> {
+                        putOnStack("cartFragment")
+                        val cartFragment = CartFragment()
+                        cartFragment.arguments = bundle
                         navigationView.setCheckedItem(R.id.cart_drawer)
-                        loadFragment(CartFragment())
+                        loadFragment(cartFragment)
                     }
                 }
             }
@@ -175,5 +203,12 @@ class MainActivity : AppCompatActivity(){
         manager.replace(R.id.fragment_holder, fragment)
         manager.addToBackStack(null)
         manager.commit()
+    }
+
+    private fun putOnStack(string: String) {
+        val top = stack.peek()
+        if (top != null && string != stack.peek()) {
+            stack.push(string)
+        }
     }
 }

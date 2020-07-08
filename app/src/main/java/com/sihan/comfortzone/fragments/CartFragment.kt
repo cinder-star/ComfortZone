@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
+        Log.e("stack", this.arguments!!.getSerializable("stack").toString())
         setupCartView(view)
         calculatePrice(view)
         return view
