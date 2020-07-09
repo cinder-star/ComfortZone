@@ -60,11 +60,6 @@ class SearchFragment : Fragment(), OnProductListener {
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     }
 
-    override fun onStop() {
-        searchAdapter.stopListening()
-        super.onStop()
-    }
-
     fun prepareSearchResult(search: String) {
         if (search.isNotEmpty()) {
             val query =

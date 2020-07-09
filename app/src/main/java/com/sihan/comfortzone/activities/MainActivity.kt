@@ -185,9 +185,27 @@ class MainActivity : AppCompatActivity(){
                 stack.pop()
                 fragName = stack.peek()
                 if(fragName == "searchFragment") {
-                    stack.clear()
-                    stack.push("productFragment")
-                    loadFragment(ProductFragment())
+                    stack.pop()
+                    fragName = stack.peek()
+                    when (fragName) {
+                        "productFragment" -> {
+                            stack.clear()
+                            loadFragment(ProductFragment())
+                        }
+                        "cartFragment" -> {
+                            loadFragment(CartFragment())
+                        }
+                    }
+                } else {
+                    when (fragName) {
+                        "productFragment" -> {
+                            stack.clear()
+                            loadFragment(ProductFragment())
+                        }
+                            "cartFragment" -> {
+                            loadFragment(CartFragment())
+                        }
+                    }
                 }
             } else {
                 stack.pop()

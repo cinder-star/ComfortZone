@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,11 +102,33 @@ class SingleProductViewFragment : Fragment() {
             val total = quantity.text.toString().toInt()
             if (total != 0) {
                 ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
-                stack.clear()
-                stack.push("productFragment")
+                stack.pop()
                 val bundle = Bundle()
                 bundle.putSerializable("stack", stack)
-                loadFragment(ProductFragment(), bundle)
+                var fragName = stack.peek()
+                Log.e("peek", fragName!!)
+                when (fragName) {
+                    "searchFragment" -> {
+                        stack.pop()
+                        fragName = stack.peek()
+                        when (fragName) {
+                            "productFragment" -> {
+                                stack.clear()
+                                loadFragment(ProductFragment(), bundle)
+                            }
+                            "cartFragment" -> {
+                                loadFragment(CartFragment(), bundle)
+                            }
+                        }
+                    }
+                    "productFragment" -> {
+                        stack.clear()
+                        loadFragment(ProductFragment(), bundle)
+                    }
+                    "cartFragment" -> {
+                        loadFragment(CartFragment(), bundle)
+                    }
+                }
             }
         }
     }
