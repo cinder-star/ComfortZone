@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="brand">#FFB71818</color>
     <color name="gray">#CADDFF</color>
-    <color name="bg_color">#F5F7FE</color>
+    <color name="bg_color">#EDF0F7</color>
     <color name="dark">#03324C</color>
     <color name="ghost_red">#ffeefe</color>
 </resources>
