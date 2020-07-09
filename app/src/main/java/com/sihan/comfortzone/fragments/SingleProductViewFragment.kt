@@ -102,33 +102,7 @@ class SingleProductViewFragment : Fragment() {
             val total = quantity.text.toString().toInt()
             if (total != 0) {
                 ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
-                stack.pop()
-                val bundle = Bundle()
-                bundle.putSerializable("stack", stack)
-                var fragName = stack.peek()
-                Log.e("peek", fragName!!)
-                when (fragName) {
-                    "searchFragment" -> {
-                        stack.pop()
-                        fragName = stack.peek()
-                        when (fragName) {
-                            "productFragment" -> {
-                                stack.clear()
-                                loadFragment(ProductFragment(), bundle)
-                            }
-                            "cartFragment" -> {
-                                loadFragment(CartFragment(), bundle)
-                            }
-                        }
-                    }
-                    "productFragment" -> {
-                        stack.clear()
-                        loadFragment(ProductFragment(), bundle)
-                    }
-                    "cartFragment" -> {
-                        loadFragment(CartFragment(), bundle)
-                    }
-                }
+                activity!!.onBackPressed()
             }
         }
     }

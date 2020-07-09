@@ -58,10 +58,6 @@ class MainActivity : AppCompatActivity(){
         materialSearchView.setEllipsize(true)
         materialSearchView.setOnQueryTextListener(object: MaterialSearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                putOnStack("searchFragment")
-                Log.e("main_activity", query!!)
-                val searchFragment = supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
-                searchFragment.prepareSearchResult(query)
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -71,13 +67,7 @@ class MainActivity : AppCompatActivity(){
         materialSearchView.setOnSearchViewListener(object: MaterialSearchView.SearchViewListener{
             override fun onSearchViewClosed() {
             }
-            override fun onSearchViewShown() {
-                if (stack.peek() != "searchFragment") {
-                    stack.push("searchFragment")
-                    val searchFragment = SearchFragment()
-                    loadFragment(searchFragment)
-                }
-            }
+            override fun onSearchViewShown() {}
         })
         prepareBottomNavBar()
         prepareHamburgerMenu()
@@ -181,32 +171,6 @@ class MainActivity : AppCompatActivity(){
                     }
                     .setNegativeButton("না", null)
                     .show()
-            } else if (fragName == "singleProductFragment"){
-                stack.pop()
-                fragName = stack.peek()
-                if(fragName == "searchFragment") {
-                    stack.pop()
-                    fragName = stack.peek()
-                    when (fragName) {
-                        "productFragment" -> {
-                            stack.clear()
-                            loadFragment(ProductFragment())
-                        }
-                        "cartFragment" -> {
-                            loadFragment(CartFragment())
-                        }
-                    }
-                } else {
-                    when (fragName) {
-                        "productFragment" -> {
-                            stack.clear()
-                            loadFragment(ProductFragment())
-                        }
-                            "cartFragment" -> {
-                            loadFragment(CartFragment())
-                        }
-                    }
-                }
             } else {
                 stack.pop()
                 fragName = stack.peek()
