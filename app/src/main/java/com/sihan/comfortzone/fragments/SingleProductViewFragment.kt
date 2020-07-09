@@ -13,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.utils.GlideApp
@@ -43,6 +44,7 @@ class SingleProductViewFragment : Fragment() {
     private lateinit var totalPrice: TextView
     private lateinit var quantity: TextView
     private lateinit var imageRef: StorageReference
+    private lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,8 @@ class SingleProductViewFragment : Fragment() {
         addToCartButton = view.findViewById(R.id.add_to_cart)
         product = this.arguments!!.getSerializable("product") as Product
         imageRef = Firebase.storage.reference.child("products/"+product.imagePath)
+        @Suppress("UNCHECKED_CAST")
+        stack = this.arguments!!.getSerializable("stack") as MyStack<String>
     }
 
     private fun bindListeners() {
@@ -94,9 +98,25 @@ class SingleProductViewFragment : Fragment() {
             updatePrice()
         }
         addToCartButton.setOnClickListener {
-            ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
-            activity!!.onBackPressed()
+            val total = quantity.text.toString().toInt()
+            if (total != 0) {
+                ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
+                stack.clear()
+                stack.push("productFragment")
+                val bundle = Bundle()
+                bundle.putSerializable("stack", stack)
+                loadFragment(ProductFragment(), bundle)
+            }
         }
+    }
+
+    private fun loadFragment(fragment: Fragment, bundle: Bundle) {
+        // load fragment
+        fragment.arguments = bundle
+        val manager = activity!!.supportFragmentManager.beginTransaction()
+        manager.replace(R.id.fragment_holder, fragment)
+        manager.addToBackStack(null)
+        manager.commit()
     }
 
     private fun updatePrice() {

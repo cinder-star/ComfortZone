@@ -86,7 +86,7 @@ class PhotoOrderActivity : AppCompatActivity() {
                 relativeLayout.visibility = View.VISIBLE
                 progressBar.max = 100
                 val userId = Firebase.auth.currentUser!!.uid
-                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
                 orderUpload(
                     userId,
                     timeStamp,
@@ -107,8 +107,8 @@ class PhotoOrderActivity : AppCompatActivity() {
         number: String
     ) {
         DataWriteManager(
-            "photo_orders/$timeStamp", PhotoOrder(
-                "orders/$uploadName",
+            timeStamp, PhotoOrder(
+                uploadName,
                 timeStamp,
                 userId,
                 name,
@@ -149,9 +149,7 @@ class PhotoOrderActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     val file = File(currentPhotoPath)
-                    val userId = Firebase.auth.currentUser!!.uid
-                    val filename = file.name
-                    uploadName = userId + filename
+                    uploadName = file.name
                     uploadUri = Uri.fromFile(file)
                     Picasso.get().load(file).into(imageView)
                 } catch (e: Exception) {
@@ -184,7 +182,7 @@ class PhotoOrderActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */

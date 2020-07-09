@@ -5,6 +5,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,6 +24,7 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.fragments.CartFragment
 import com.sihan.comfortzone.fragments.ProductFragment
+import com.sihan.comfortzone.fragments.SearchFragment
 
 
 class MainActivity : AppCompatActivity(){
@@ -56,10 +58,10 @@ class MainActivity : AppCompatActivity(){
         materialSearchView.setEllipsize(true)
         materialSearchView.setOnQueryTextListener(object: MaterialSearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val i = Intent(this@MainActivity, SearchActivity::class.java)
-                i.putExtra(SearchManager.QUERY, query)
-                i.action = Intent.ACTION_SEARCH
-                startActivity(i)
+                putOnStack("searchFragment")
+                Log.e("main_activity", query!!)
+                val searchFragment = supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
+                searchFragment.prepareSearchResult(query)
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -70,6 +72,11 @@ class MainActivity : AppCompatActivity(){
             override fun onSearchViewClosed() {
             }
             override fun onSearchViewShown() {
+                if (stack.peek() != "searchFragment") {
+                    stack.push("searchFragment")
+                    val searchFragment = SearchFragment()
+                    loadFragment(searchFragment)
+                }
             }
         })
         prepareBottomNavBar()
@@ -161,6 +168,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onBackPressed() {
+        Log.e("stack", stack.toString())
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
@@ -173,6 +181,14 @@ class MainActivity : AppCompatActivity(){
                     }
                     .setNegativeButton("না", null)
                     .show()
+            } else if (fragName == "singleProductFragment"){
+                stack.pop()
+                fragName = stack.peek()
+                if(fragName == "searchFragment") {
+                    stack.clear()
+                    stack.push("productFragment")
+                    loadFragment(ProductFragment())
+                }
             } else {
                 stack.pop()
                 fragName = stack.peek()
