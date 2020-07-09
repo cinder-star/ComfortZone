@@ -60,7 +60,14 @@ class SearchFragment : Fragment(), OnProductListener {
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     }
 
-    fun prepareSearchResult(search: String) {
+    override fun onStart() {
+        super.onStart()
+        prepareSearchResult()
+    }
+
+    fun prepareSearchResult() {
+        var search = stack.peek()!!
+        search = search.split("_")[1]
         if (search.isNotEmpty()) {
             val query =
                 Firebase.database.reference.child("/products").orderByChild("name").startAt(search)
