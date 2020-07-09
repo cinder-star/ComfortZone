@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sihan.comfortzone.R
+import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.utils.ShoppingCartAdapter
 
@@ -30,6 +32,8 @@ class CartFragment : Fragment() {
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: ShoppingCartAdapter
     private lateinit var totalPriceView: TextView
+    private lateinit var checkout: Button
+    private lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +55,25 @@ class CartFragment : Fragment() {
     }
 
     private fun bindWidgets(view: View?) {
+        @Suppress("UNCHECKED_CAST")
+        stack = this.arguments!!.getSerializable("stack") as MyStack<String>
         totalPriceView = view!!.findViewById(R.id.total_price)
+        checkout = view.findViewById(R.id.checkout)
+        checkout.setOnClickListener {
+            stack.push("orderFragment")
+            val bundle = Bundle()
+            bundle.putSerializable("stack", stack)
+            loadFragment(InfoOrderFragment(), bundle)
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment, bundle: Bundle) {
+        // load fragment
+        fragment.arguments = bundle
+        val manager = activity!!.supportFragmentManager.beginTransaction()
+        manager.replace(R.id.fragment_holder, fragment)
+        manager.addToBackStack(null)
+        manager.commit()
     }
 
     private fun calculatePrice(view: View?) {

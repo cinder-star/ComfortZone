@@ -59,6 +59,11 @@ class ShoppingCart {
             saveCart(cart)
         }
 
+        fun clearCart() {
+            val newCart: MutableList<CartItem> = mutableListOf()
+            Paper.book().write("cart", newCart)
+        }
+
         private fun saveCart(cart: MutableList<CartItem>) {
             Paper.book().write("cart", cart)
         }
