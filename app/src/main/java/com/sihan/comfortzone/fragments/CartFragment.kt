@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,11 +61,21 @@ class CartFragment : Fragment() {
         totalPriceView = view!!.findViewById(R.id.total_price)
         checkout = view.findViewById(R.id.checkout)
         checkout.setOnClickListener {
-            stack.push("orderFragment")
-            val bundle = Bundle()
-            bundle.putSerializable("stack", stack)
-            loadFragment(InfoOrderFragment(), bundle)
+            if(validate()) {
+                stack.push("orderFragment")
+                val bundle = Bundle()
+                bundle.putSerializable("stack", stack)
+                loadFragment(InfoOrderFragment(), bundle)
+            }
         }
+    }
+
+    private fun validate(): Boolean {
+        if (ShoppingCart.getShoppingCartSize() == 0){
+            Toast.makeText(activity!!, "Cart is empty!", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun loadFragment(fragment: Fragment, bundle: Bundle) {
