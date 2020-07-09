@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -58,6 +59,19 @@ class MainActivity : AppCompatActivity(){
         materialSearchView.setEllipsize(true)
         materialSearchView.setOnQueryTextListener(object: MaterialSearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query == null) {
+                    Toast.makeText(this@MainActivity, "Nothing to search!", Toast.LENGTH_SHORT).show()
+                } else {
+                    if (!stack.peek()!!.startsWith("searchActivity")) {
+                        loadFragment(SearchFragment())
+                        stack.push("searchActivity_$query")
+                    } else {
+                        stack.pop()
+                        stack.push("searchActivity_$query")
+                        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
+                        fragment.prepareSearchResult()
+                    }
+                }
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
