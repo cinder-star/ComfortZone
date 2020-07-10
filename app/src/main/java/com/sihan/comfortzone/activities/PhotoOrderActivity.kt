@@ -14,9 +14,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.DataWriteManager
 import com.sihan.comfortzone.database.StorageUploadManager
 import com.sihan.comfortzone.domains.PhotoOrder
 import com.squareup.picasso.Picasso
@@ -94,7 +94,6 @@ class PhotoOrderActivity : AppCompatActivity() {
                     customerAddresses.text.toString(),
                     customerNumber.text.toString()
                 )
-                fileUpload()
             }
         }
     }
@@ -106,19 +105,25 @@ class PhotoOrderActivity : AppCompatActivity() {
         address: String,
         number: String
     ) {
-        DataWriteManager(
-            timeStamp, PhotoOrder(
+        val photoOrder =  PhotoOrder(
                 uploadName,
-                timeStamp,
                 userId,
                 name,
                 address,
                 number
-            )
-        ).write()
+        )
+        val database = Firebase.database.reference
+        database.child("/photoOrder/$timeStamp").setValue(photoOrder)
+            .addOnSuccessListener {
+                fileUpload()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Unexpected error occurred!\n Order could not be sent.", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun fileUpload() {
+        @Suppress("DEPRECATION")
         var bitmap = if (android.os.Build.VERSION.SDK_INT >= 29) {
             ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.contentResolver, uploadUri!!))
         } else {
@@ -185,7 +190,7 @@ class PhotoOrderActivity : AppCompatActivity() {
         val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
+            timeStamp, /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {

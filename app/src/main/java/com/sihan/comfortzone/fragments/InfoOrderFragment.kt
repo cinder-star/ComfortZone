@@ -72,7 +72,7 @@ class InfoOrderFragment : Fragment() {
     }
 
     private fun uploadInformation(view: View) {
-        if (isInternetAvailable(activity!!)) {
+        if (isInternetAvailable()) {
             if (validate()) {
                 totalOrderProcess(view)
             }
@@ -83,6 +83,7 @@ class InfoOrderFragment : Fragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun totalOrderProcess(view: View) {
+        @Suppress("SpellCheckingInspection")
         val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         val price = calculatePrice()
         val order = Order(
@@ -94,15 +95,15 @@ class InfoOrderFragment : Fragment() {
             customerNumber.text.toString(),
             "no"
         )
-        DataWriteManager("/order/$timeStamp", order).write()
-        uploadOrder(timeStamp)
+        val database = Firebase.database.reference
+        database.child("/order/$timeStamp").setValue(order)
+            .addOnSuccessListener {
+                uploadOrder(timeStamp)
+            }
+            .addOnFailureListener {
+                Toast.makeText(activity!!, "Unexpected error occurred!\n Order could not be sent.", Toast.LENGTH_LONG).show()
+            }
         view.hideKeyboard()
-        ShoppingCart.clearCart()
-        stack.clear()
-        stack.push("productFragment")
-        val bundle = Bundle()
-        bundle.putSerializable("stack", stack)
-        loadFragment(ProductFragment(), bundle)
     }
 
     private fun loadFragment(fragment: Fragment, bundle: Bundle) {
@@ -128,6 +129,12 @@ class InfoOrderFragment : Fragment() {
         orderItems.forEach {
             Firebase.database.reference.child("/orderItems/"+orderId+"/"+it.id).setValue(it)
         }
+        ShoppingCart.clearCart()
+        stack.clear()
+        stack.push("productFragment")
+        val bundle = Bundle()
+        bundle.putSerializable("stack", stack)
+        loadFragment(ProductFragment(), bundle)
     }
 
     private fun bindWidgets(view: View) {
@@ -164,7 +171,8 @@ class InfoOrderFragment : Fragment() {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    private fun isInternetAvailable(context: Context): Boolean {
+    @Suppress("DEPRECATION")
+    private fun isInternetAvailable(): Boolean {
         var result = false
         val connectivityManager =
             activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
