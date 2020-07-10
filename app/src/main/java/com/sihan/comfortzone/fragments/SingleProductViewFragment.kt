@@ -110,15 +110,6 @@ class SingleProductViewFragment : Fragment() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment, bundle: Bundle) {
-        // load fragment
-        fragment.arguments = bundle
-        val manager = activity!!.supportFragmentManager.beginTransaction()
-        manager.replace(R.id.fragment_holder, fragment)
-        manager.addToBackStack(null)
-        manager.commit()
-    }
-
     private fun updatePrice() {
         totalPrice.text = (quantity.text.toString().toInt() * product.price!!).toString()
     }

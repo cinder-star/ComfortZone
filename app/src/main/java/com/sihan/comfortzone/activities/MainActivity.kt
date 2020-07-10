@@ -1,11 +1,14 @@
 package com.sihan.comfortzone.activities
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity(){
                         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
                         fragment.prepareSearchResult()
                     }
+                    materialSearchView.hideKeyboard()
                 }
                 return true
             }
@@ -78,6 +82,7 @@ class MainActivity : AppCompatActivity(){
         })
         materialSearchView.setOnSearchViewListener(object: MaterialSearchView.SearchViewListener{
             override fun onSearchViewClosed() {
+                materialSearchView.hideKeyboard()
             }
             override fun onSearchViewShown() {}
         })
@@ -251,5 +256,10 @@ class MainActivity : AppCompatActivity(){
         if (top == null || string != stack.peek()) {
             stack.push(string)
         }
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
