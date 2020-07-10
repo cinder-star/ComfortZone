@@ -1,11 +1,9 @@
 package com.sihan.comfortzone.activities
 
 import android.app.AlertDialog
-import android.app.SearchManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -18,7 +16,6 @@ import androidx.fragment.app.Fragment
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
@@ -173,7 +170,6 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onBackPressed() {
-        Log.e("stack", stack.toString())
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
