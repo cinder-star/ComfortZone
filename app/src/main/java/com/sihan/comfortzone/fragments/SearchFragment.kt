@@ -14,7 +14,7 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.repositories.OnProductListener
-import com.sihan.comfortzone.utils.SearchProductAdapter
+import com.sihan.comfortzone.utils.ProductAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +32,7 @@ class SearchFragment : Fragment(), OnProductListener {
     private var param2: String? = null
     private lateinit var searchResult: RecyclerView
     private lateinit var stack: MyStack<String>
-    private lateinit var searchAdapter: SearchProductAdapter
+    private lateinit var adapter: ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +75,9 @@ class SearchFragment : Fragment(), OnProductListener {
             val options = FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product::class.java)
                 .build()
-            searchAdapter = SearchProductAdapter(activity!!, options, this)
-            searchResult.adapter = searchAdapter
-            searchAdapter.startListening()
+            adapter = ProductAdapter(activity!!, options, this)
+            searchResult.adapter = adapter
+            adapter.startListening()
         }
     }
 

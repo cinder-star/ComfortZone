@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
@@ -63,11 +66,14 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun prepareProductView() {
-        val dataManager = DataManager("/products/")
-        val productList: MutableList<Product> = mutableListOf()
-        val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
+        val query =
+            Firebase.database.reference.child("/products").orderByChild("popular").equalTo("yes")
+        val options = FirebaseRecyclerOptions.Builder<Product>()
+            .setQuery(query, Product::class.java)
+            .build()
+        val productAdapter = ProductAdapter(activity!!, options, this)
         productRecyclerView.adapter = productAdapter
-        dataManager.setListener<Product>(productAdapter!!)
+        productAdapter.startListening()
     }
 
     companion object {

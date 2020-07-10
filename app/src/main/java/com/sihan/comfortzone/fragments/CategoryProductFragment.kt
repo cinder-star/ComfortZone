@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.database.CategoryProduct
 import com.sihan.comfortzone.database.DataManager
@@ -56,11 +59,14 @@ class CategoryProductFragment : Fragment(), OnProductListener {
     }
 
     private fun prepareProductView() {
-        val categoryProduct = CategoryProduct("/products/", "category", stack.peek()!!)
-        val productList: MutableList<Product> = mutableListOf()
-        val productAdapter = activity?.let { ProductAdapter(it, productList, this) }
+        val query =
+            Firebase.database.reference.child("/products").orderByChild("category").equalTo(stack.peek()!!)
+        val options = FirebaseRecyclerOptions.Builder<Product>()
+            .setQuery(query, Product::class.java)
+            .build()
+        val productAdapter = ProductAdapter(activity!!, options, this)
         categoryProductView.adapter = productAdapter
-        categoryProduct.addListener(productAdapter!!)
+        productAdapter.startListening()
     }
 
     private fun bindWidgets(view: View) {

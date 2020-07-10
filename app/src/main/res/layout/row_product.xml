@@ -50,6 +50,8 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/offer"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="6dp"
@@ -64,10 +66,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/old_price_holder"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
