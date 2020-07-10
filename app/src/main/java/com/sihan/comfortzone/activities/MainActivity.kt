@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
 import io.paperdb.Paper
@@ -16,6 +17,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         Paper.init(this)
+        Firebase.database.setPersistenceEnabled(true)
         Handler(Looper.myLooper()!!).postDelayed(Runnable {
             checkStatus()
         }, 750)

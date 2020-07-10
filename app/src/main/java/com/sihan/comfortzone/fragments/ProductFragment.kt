@@ -46,7 +46,6 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun bindWidgets(view: View) {
-        Firebase.database.setPersistenceEnabled(true)
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
 
