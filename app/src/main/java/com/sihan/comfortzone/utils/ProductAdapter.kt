@@ -49,7 +49,7 @@ class ProductAdapter(
             itemView.findViewById<TextView>(R.id.product_name).text = product.name
             itemView.findViewById<TextView>(R.id.product_price).text = product.price.toString()
             itemView.findViewById<TextView>(R.id.old_product_price).text = product.price.toString()
-            if (product.category == "special") {
+            if (product.special == "yes") {
                 itemView.findViewById<TextView>(R.id.offer).visibility = View.VISIBLE
                 itemView.findViewById<LinearLayout>(R.id.old_price_holder).visibility = View.VISIBLE
                 val prevPrice: TextView = itemView.findViewById(R.id.old_product_price)

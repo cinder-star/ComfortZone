@@ -59,8 +59,13 @@ class CategoryProductFragment : Fragment(), OnProductListener {
     }
 
     private fun prepareProductView() {
-        val query =
-            Firebase.database.reference.child("/products").orderByChild("category").equalTo(stack.peek()!!)
+        val value = stack.peek()!!
+        var query =
+            Firebase.database.reference.child("/products").orderByChild("category").equalTo(value)
+        if (value == "দুর্দান্ত অফার") {
+            query =
+                Firebase.database.reference.child("/products").orderByChild("special").equalTo("yes")
+        }
         val options = FirebaseRecyclerOptions.Builder<Product>()
             .setQuery(query, Product::class.java)
             .build()
