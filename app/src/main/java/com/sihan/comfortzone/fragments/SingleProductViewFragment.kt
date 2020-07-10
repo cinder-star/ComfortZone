@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -102,7 +103,9 @@ class SingleProductViewFragment : Fragment() {
             val total = quantity.text.toString().toInt()
             if (total != 0) {
                 ShoppingCart.bulkAdd(product, quantity.text.toString().toInt())
-                activity!!.onBackPressed()
+                Snackbar.make(it, "product added to cart", Snackbar.LENGTH_SHORT).show()
+                stack.pop()
+                activity!!.supportFragmentManager.popBackStackImmediate()
             }
         }
     }
