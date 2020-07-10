@@ -1,5 +1,6 @@
 package com.sihan.comfortzone.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
+import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.utils.ShoppingCartAdapter
 
@@ -51,8 +59,26 @@ class CartFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         bindWidgets(view)
         setupCartView(view)
-        calculatePrice(view)
+        calculatePrice()
+        bindDataListener()
         return view
+    }
+
+    private fun bindDataListener() {
+        val dataRef = Firebase.database.reference.child("products")
+        dataRef.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val items: MutableList<Product> = mutableListOf()
+                snapshot.children.forEach{
+                    items.add(it.getValue<Product>() as Product)
+                }
+                val updateThread = UpdateThread(items, activity!!, totalPriceView, cartAdapter)
+                updateThread.start()
+            }
+
+        })
     }
 
     private fun bindWidgets(view: View?) {
@@ -87,11 +113,11 @@ class CartFragment : Fragment() {
         manager.commit()
     }
 
-    private fun calculatePrice(view: View?) {
+    private fun calculatePrice() {
         val totalPrice: Double
         totalPrice = ShoppingCart.getCart()
             .fold(0.toDouble()) { acc, cartItem -> acc + cartItem.quantity.times(cartItem.product.price!!.toDouble()) }
-        view!!.findViewById<TextView>(R.id.total_price).text = totalPrice.toString()
+        totalPriceView.text = totalPrice.toString()
     }
 
     private fun setupCartView(view: View?) {
@@ -100,6 +126,24 @@ class CartFragment : Fragment() {
         cartRecyclerView = view!!.findViewById(R.id.shopping_cart_recyclerView)
         cartRecyclerView.adapter = cartAdapter
         cartRecyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private class UpdateThread(private var items: MutableList<Product>, private var activity: Activity, private val textView: TextView, private val adapter: ShoppingCartAdapter): Thread() {
+        override fun run() {
+            ShoppingCart.bulkUpdate(items)
+            adapter.setItem(ShoppingCart.getCart())
+            activity.runOnUiThread {
+                calculatePrice(textView, adapter)
+            }
+        }
+
+        private fun calculatePrice(totalPriceView: TextView, adapter: ShoppingCartAdapter) {
+            val totalPrice: Double
+            totalPrice = ShoppingCart.getCart()
+                .fold(0.toDouble()) { acc, cartItem -> acc + cartItem.quantity.times(cartItem.product.price!!.toDouble()) }
+            totalPriceView.text = totalPrice.toString()
+            adapter.notifyDataSetChanged()
+        }
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.sihan.comfortzone.domains
 
+import android.util.Log
 import io.paperdb.Paper
 
 class ShoppingCart {
@@ -55,6 +56,27 @@ class ShoppingCart {
             val targetItem = cart.singleOrNull { it.product.id == product.id }
             if (targetItem != null) {
                 targetItem.product = product
+            }
+            saveCart(cart)
+        }
+
+        fun bulkUpdate(products: MutableList<Product>) {
+            val cart = getCart()
+            products.forEach { product ->
+                val targetItem = cart.singleOrNull {
+                    it.product.id == product.id
+                }
+                if (targetItem != null) {
+                    targetItem.product = product
+                }
+            }
+            cart.forEach {cartItem ->
+                val targetItem = products.singleOrNull {
+                    it.id == cartItem.product.id
+                }
+                if (targetItem == null) {
+                    cart.remove(cartItem)
+                }
             }
             saveCart(cart)
         }
