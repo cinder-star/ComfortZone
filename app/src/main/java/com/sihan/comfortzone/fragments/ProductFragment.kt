@@ -46,6 +46,7 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun bindWidgets(view: View) {
+        Firebase.database.setPersistenceEnabled(true)
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
 
@@ -66,8 +67,9 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun prepareProductView() {
-        val query =
-            Firebase.database.reference.child("/products").orderByChild("popular").equalTo("yes")
+        val ref = Firebase.database.reference.child("/products")
+        ref.keepSynced(true)
+        val query = ref.orderByChild("popular").equalTo("yes")
         val options = FirebaseRecyclerOptions.Builder<Product>()
             .setQuery(query, Product::class.java)
             .build()

@@ -53,6 +53,7 @@ class SearchFragment : Fragment(), OnProductListener {
     }
 
     private fun bindWidgets(view: View) {
+        Firebase.database.setPersistenceEnabled(true)
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
         searchResult = view.findViewById(R.id.search_result)
@@ -69,8 +70,9 @@ class SearchFragment : Fragment(), OnProductListener {
         var search = stack.peek()!!
         search = search.split("_")[1]
         if (search.isNotEmpty()) {
-            val query =
-                Firebase.database.reference.child("/products").orderByChild("name").startAt(search)
+            val ref = Firebase.database.reference.child("/products")
+            ref.keepSynced(true)
+            val query = ref.orderByChild("name").startAt(search)
                     .endAt(search + "\uf8ff")
             val options = FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product::class.java)
