@@ -103,7 +103,9 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     override fun onCategoryClicked(category: Category) {
         val bundle = Bundle()
         stack.push(category.name!!)
+        val id = category.id!!
         bundle.putSerializable("stack", stack)
+        bundle.putSerializable("id", id)
         if (category.subCategory == "yes") {
             loadFragment(SubCategoryFragment(), bundle)
         } else{

@@ -34,6 +34,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private lateinit var subCategoryRecyclerView: RecyclerView
     private lateinit var subCategoryName: TextView
     private lateinit var stack: MyStack<String>
+    private lateinit var categoryName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     private fun prepareSubcategory() {
-        val dataManager = DataManager("/subCategories/"+stack.peek())
+        val dataManager = DataManager("/subCategories/$categoryName")
         val subCategoryList: MutableList<Category> = mutableListOf()
         val subCategoryAdapter = activity?.let { CategoryAdapter(it, subCategoryList, this) }
         subCategoryRecyclerView.adapter = subCategoryAdapter
@@ -65,6 +66,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private fun bindWidgets(view: View) {
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
+        categoryName = this.arguments!!.getSerializable("id") as String
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
         subCategoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
@@ -104,7 +106,9 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     override fun onCategoryClicked(category: Category) {
         val bundle = Bundle()
         stack.push(category.name!!)
+        val id = category.id!!
         bundle.putSerializable("stack", stack)
+        bundle.putSerializable("id", id)
         if (category.subCategory == "yes") {
             loadFragment(SubCategoryFragment(), bundle)
         } else{
