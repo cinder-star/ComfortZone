@@ -114,11 +114,12 @@ class PhotoOrderActivity : AppCompatActivity() {
         number: String
     ) {
         val photoOrder =  PhotoOrder(
-                uploadName,
-                userId,
-                name,
-                address,
-                number
+            timeStamp,
+            uploadName,
+            userId,
+            name,
+            address,
+            number
         )
         val database = Firebase.database.reference
         database.child("/photoOrder/$timeStamp").setValue(photoOrder)

@@ -124,7 +124,7 @@ class InfoOrderFragment : Fragment() {
         val cartItems = ShoppingCart.getCart()
         val orderItems: MutableList<OrderItem> = mutableListOf()
         cartItems.forEach {
-            orderItems.add(OrderItem(it.product.id, it.product.price, it.quantity))
+            orderItems.add(OrderItem(it.product.id, it.product.name, it.product.imagePath, it.product.price, it.quantity))
         }
         orderItems.forEach {
             Firebase.database.reference.child("/orderItems/"+orderId+"/"+it.id).setValue(it)
