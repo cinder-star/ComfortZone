@@ -25,6 +25,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.fragments.CartFragment
+import com.sihan.comfortzone.fragments.ContactUsFragment
 import com.sihan.comfortzone.fragments.ProductFragment
 import com.sihan.comfortzone.fragments.SearchFragment
 
@@ -111,6 +112,11 @@ class MainActivity : AppCompatActivity(){
                 item.isChecked = true
                 navigationBar.setItemSelected(R.id.cart)
                 loadFragment(CartFragment())
+            }
+            R.id.contact_us -> {
+                stack.push("contactFragment")
+                navigationBar.setItemSelected(R.id.nav_contact_us)
+                loadFragment(ContactUsFragment())
             }
             R.id.sign_out_drawer -> {
                 Firebase.auth.signOut()
@@ -199,6 +205,10 @@ class MainActivity : AppCompatActivity(){
                         super.onBackPressed()
                         syncFragments(R.id.cart, R.id.cart_drawer)
                     }
+                    "contactFragment" -> {
+                        super.onBackPressed()
+                        syncFragments(R.id.nav_contact_us, R.id.contact_us)
+                    }
                     else -> {
                         super.onBackPressed()
                     }
@@ -226,6 +236,11 @@ class MainActivity : AppCompatActivity(){
                         putOnStack("cartFragment")
                         navigationView.setCheckedItem(R.id.cart_drawer)
                         loadFragment(CartFragment())
+                    }
+                    R.id.nav_contact_us -> {
+                        stack.push("productFragment")
+                        navigationView.setCheckedItem(R.id.contact_us)
+                        loadFragment(ContactUsFragment())
                     }
                 }
             }

@@ -10,9 +10,9 @@
             android:icon="@drawable/ic_bag"
             android:title="@string/cart" />
         <item
-            android:id="@+id/notification_drawer"
+            android:id="@+id/contact_us"
             android:icon="@drawable/ic_bell"
-            android:title="@string/notifications" />
+            android:title="@string/contact_us" />
         <item
             android:id="@+id/sign_out_drawer"
             android:icon="@drawable/ic_log_out"

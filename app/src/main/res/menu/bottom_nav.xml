@@ -12,9 +12,9 @@
         android:title="@string/cart"
         app:cnb_iconColor="@color/brand"/>
     <item
-        android:id="@+id/notification"
+        android:id="@+id/nav_contact_us"
         android:icon="@drawable/ic_bell"
-        android:title="@string/notifications"
+        android:title="@string/contact_us"
         app:cnb_iconColor="@color/brand" />
 </menu>
 
