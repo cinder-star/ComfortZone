@@ -1,7 +1,6 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.repositories.OnCategoryListener
 import com.sihan.comfortzone.utils.CategoryAdapter
-import io.paperdb.Paper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +34,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     private lateinit var subCategoryRecyclerView: RecyclerView
     private lateinit var subCategoryName: TextView
     private lateinit var stack: MyStack<String>
-    private lateinit var categoryName: String
+    private lateinit var categoryId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,17 +56,21 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     private fun prepareSubcategory() {
-        val dataManager = DataManager("/subCategories/$categoryName")
-        val subCategoryList: MutableList<Category> = mutableListOf()
-        val subCategoryAdapter = activity?.let { CategoryAdapter(it, subCategoryList, this) }
+        val ref = Firebase.database.reference.child("/subCategories")
+        ref.keepSynced(true)
+        val query = ref.orderByChild("parent").equalTo(categoryId)
+        val options = FirebaseRecyclerOptions.Builder<Category>()
+            .setQuery(query, Category::class.java)
+            .build()
+        val subCategoryAdapter = CategoryAdapter(activity!!, options, this)
         subCategoryRecyclerView.adapter = subCategoryAdapter
-        dataManager.setListener<Category>(subCategoryAdapter!!)
+        subCategoryAdapter.startListening()
     }
 
     private fun bindWidgets(view: View) {
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
-        categoryName = this.arguments!!.getSerializable("id") as String
+        categoryId = this.arguments!!.getSerializable("id") as String
         subCategoryRecyclerView = view.findViewById(R.id.sub_category)
         subCategoryRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)

@@ -58,11 +58,14 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun prepareCategoryView() {
-        val dataManager = DataManager("/categories")
-        val categoryList: MutableList<Category> = mutableListOf()
-        val categoryAdapter = activity?.let { CategoryAdapter(it, categoryList, this) }
+        val ref = Firebase.database.reference.child("/categories")
+        ref.keepSynced(true)
+        val options = FirebaseRecyclerOptions.Builder<Category>()
+            .setQuery(ref, Category::class.java)
+            .build()
+        val categoryAdapter = CategoryAdapter(activity!!, options, this)
         categoryRecyclerView.adapter = categoryAdapter
-        dataManager.setListener<Category>(categoryAdapter!!)
+        categoryAdapter.startListening()
     }
 
     private fun prepareProductView() {
