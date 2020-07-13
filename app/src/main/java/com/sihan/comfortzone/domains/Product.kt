@@ -2,7 +2,7 @@ package com.sihan.comfortzone.domains
 
 import java.io.Serializable
 
-data class Product (
+data class Product(
     var id: String? = null,
     var name: String? = null,
     var price: Int? = 0,
@@ -11,4 +11,4 @@ data class Product (
     var category: String? = null,
     var popular: String? = "no",
     var special: String? = "no"
-): Serializable
+) : Serializable

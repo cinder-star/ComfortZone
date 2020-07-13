@@ -72,7 +72,7 @@ class SearchFragment : Fragment(), OnProductListener {
             val ref = Firebase.database.reference.child("/products")
             ref.keepSynced(true)
             val query = ref.orderByChild("name").startAt(search)
-                    .endAt(search + "\uf8ff")
+                .endAt(search + "\uf8ff")
             val options = FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product::class.java)
                 .build()

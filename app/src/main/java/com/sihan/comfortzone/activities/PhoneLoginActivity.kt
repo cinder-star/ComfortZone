@@ -1,10 +1,10 @@
 package com.sihan.comfortzone.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.sihan.comfortzone.R
 
 class PhoneLoginActivity : AppCompatActivity() {

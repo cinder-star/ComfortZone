@@ -18,7 +18,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.DataWriteManager
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Order
 import com.sihan.comfortzone.domains.OrderItem
@@ -101,7 +100,11 @@ class InfoOrderFragment : Fragment() {
                 uploadOrder(timeStamp)
             }
             .addOnFailureListener {
-                Toast.makeText(activity!!, "Unexpected error occurred!\n Order could not be sent.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    activity!!,
+                    "Unexpected error occurred!\n Order could not be sent.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         view.hideKeyboard()
     }
@@ -124,10 +127,18 @@ class InfoOrderFragment : Fragment() {
         val cartItems = ShoppingCart.getCart()
         val orderItems: MutableList<OrderItem> = mutableListOf()
         cartItems.forEach {
-            orderItems.add(OrderItem(it.product.id, it.product.name, it.product.imagePath, it.product.price, it.quantity))
+            orderItems.add(
+                OrderItem(
+                    it.product.id,
+                    it.product.name,
+                    it.product.imagePath,
+                    it.product.price,
+                    it.quantity
+                )
+            )
         }
         orderItems.forEach {
-            Firebase.database.reference.child("/orderItems/"+orderId+"/"+it.id).setValue(it)
+            Firebase.database.reference.child("/orderItems/" + orderId + "/" + it.id).setValue(it)
         }
         ShoppingCart.clearCart()
         stack.clear()

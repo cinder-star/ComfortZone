@@ -15,7 +15,11 @@ import com.sihan.comfortzone.domains.CartItem
 import com.sihan.comfortzone.domains.ShoppingCart
 import com.sihan.comfortzone.repositories.MyAdapter
 
-class ShoppingCartAdapter(var context: Context, private var cartItems: MutableList<CartItem>, private var textView: TextView) :
+class ShoppingCartAdapter(
+    var context: Context,
+    private var cartItems: MutableList<CartItem>,
+    private var textView: TextView
+) :
     MyAdapter, RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,26 +33,27 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
         holder.bindItem(cartItems[position], context, cartItems, this)
     }
 
-    class ViewHolder(view: View, private val textView: TextView): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val textView: TextView) : RecyclerView.ViewHolder(view) {
         private val totalPriceView: TextView = itemView.findViewById(R.id.total_price)
         fun bindItem(
             cartItem: CartItem,
             context: Context,
             cartItems: MutableList<CartItem>,
             shoppingCartAdapter: ShoppingCartAdapter
-        ){
+        ) {
             val productImage: ImageView = itemView.findViewById(R.id.product_image)
-            val imageRef = Firebase.storage.reference.child("products/"+cartItem.product.imagePath!!)
+            val imageRef =
+                Firebase.storage.reference.child("products/" + cartItem.product.imagePath!!)
             val quantity = itemView.findViewById<TextView>(R.id.product_quantity)
             itemView.findViewById<TextView>(R.id.product_name).text = cartItem.product.name
             quantity.text = cartItem.quantity.toString()
             totalPriceView.text = (cartItem.quantity * cartItem.product.price!!).toString()
-            itemView.findViewById<ImageButton>(R.id.add_one_item).setOnClickListener{
+            itemView.findViewById<ImageButton>(R.id.add_one_item).setOnClickListener {
                 ShoppingCart.addItem(cartItem)
                 quantity.text = cartItem.quantity.toString()
                 updateTotalPrice()
             }
-            itemView.findViewById<ImageButton>(R.id.minus_one_item).setOnClickListener{
+            itemView.findViewById<ImageButton>(R.id.minus_one_item).setOnClickListener {
                 ShoppingCart.removeItem(cartItem)
                 quantity.text = cartItem.quantity.toString()
                 if (cartItem.quantity == 0) {
@@ -57,7 +62,7 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
                 }
                 updateTotalPrice()
             }
-            itemView.findViewById<ImageButton>(R.id.remove_item).setOnClickListener{
+            itemView.findViewById<ImageButton>(R.id.remove_item).setOnClickListener {
                 ShoppingCart.completelyRemoveItem(cartItem)
                 cartItems.removeAt(adapterPosition)
                 shoppingCartAdapter.notifyDataSetChanged()
@@ -75,7 +80,6 @@ class ShoppingCartAdapter(var context: Context, private var cartItems: MutableLi
             totalPriceView.text = totalPrice.toString()
         }
     }
-
 
 
     override fun setItem(items: List<*>) {

@@ -1,21 +1,17 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.CategoryProduct
-import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Product
 import com.sihan.comfortzone.repositories.OnProductListener
@@ -64,7 +60,8 @@ class CategoryProductFragment : Fragment(), OnProductListener {
             Firebase.database.reference.child("/products").orderByChild("category").equalTo(value)
         if (value == "দুর্দান্ত অফার") {
             query =
-                Firebase.database.reference.child("/products").orderByChild("special").equalTo("yes")
+                Firebase.database.reference.child("/products").orderByChild("special")
+                    .equalTo("yes")
         }
         val options = FirebaseRecyclerOptions.Builder<Product>()
             .setQuery(query, Product::class.java)
@@ -80,7 +77,8 @@ class CategoryProductFragment : Fragment(), OnProductListener {
         categoryIndicator = view.findViewById(R.id.category_indicator)
         categoryIndicator.text = stack.peek()
         categoryProductView = view.findViewById(R.id.category_product)
-        categoryProductView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        categoryProductView.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     }
 
     companion object {

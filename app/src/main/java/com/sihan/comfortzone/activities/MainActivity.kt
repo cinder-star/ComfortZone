@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,7 +31,7 @@ import com.sihan.comfortzone.fragments.ProductFragment
 import com.sihan.comfortzone.fragments.SearchFragment
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
     private lateinit var navigationBar: ChipNavigationBar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -59,10 +60,11 @@ class MainActivity : AppCompatActivity(){
 
     private fun bindListeners() {
         materialSearchView.setEllipsize(true)
-        materialSearchView.setOnQueryTextListener(object: MaterialSearchView.OnQueryTextListener{
+        materialSearchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query == null) {
-                    Toast.makeText(this@MainActivity, "Nothing to search!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Nothing to search!", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     if (!stack.peek()!!.startsWith("searchActivity")) {
                         loadFragment(SearchFragment())
@@ -70,21 +72,24 @@ class MainActivity : AppCompatActivity(){
                     } else {
                         stack.pop()
                         stack.push("searchActivity_$query")
-                        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
+                        val fragment =
+                            supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
                         fragment.prepareSearchResult()
                     }
                     materialSearchView.hideKeyboard()
                 }
                 return true
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
-        materialSearchView.setOnSearchViewListener(object: MaterialSearchView.SearchViewListener{
+        materialSearchView.setOnSearchViewListener(object : MaterialSearchView.SearchViewListener {
             override fun onSearchViewClosed() {
                 materialSearchView.hideKeyboard()
             }
+
             override fun onSearchViewShown() {}
         })
         prepareBottomNavBar()
@@ -99,7 +104,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun selectDrawerItem(item: MenuItem) {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.home_drawer -> {
                 item.isChecked = true
                 stack.clear()
@@ -165,11 +170,17 @@ class MainActivity : AppCompatActivity(){
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true
         }
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_search -> true
             R.id.photo_order -> {
                 val i = Intent(this, PhotoOrderActivity::class.java)
                 startActivity(i)
+                true
+            }
+            R.id.call_us -> {
+                val phone = "+8801922227400"
+                val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
+                this.startActivity(intent)
                 true
             }
             android.R.id.home -> {
@@ -185,7 +196,7 @@ class MainActivity : AppCompatActivity(){
             materialSearchView.closeSearch()
         } else {
             var fragName = stack.peek()
-            if (fragName == "productFragment"){
+            if (fragName == "productFragment") {
                 AlertDialog.Builder(this)
                     .setMessage("আপনি কি অ্যাপ থেকে প্রস্থান করতে চান?")
                     .setPositiveButton("হ্যাঁ") { _, _ ->
@@ -222,10 +233,10 @@ class MainActivity : AppCompatActivity(){
         navigationView.setCheckedItem(humBurgerId)
     }
 
-    private fun prepareBottomNavBar(){
-        navigationBar.setOnItemSelectedListener(object: ChipNavigationBar.OnItemSelectedListener{
+    private fun prepareBottomNavBar() {
+        navigationBar.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(id: Int) {
-                when(id) {
+                when (id) {
                     R.id.nav_home -> {
                         stack.clear()
                         stack.push("productFragment")

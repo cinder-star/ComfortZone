@@ -46,7 +46,8 @@ class ConfirmPhoneNumber : AppCompatActivity() {
             60,
             TimeUnit.SECONDS,
             TaskExecutors.MAIN_THREAD,
-            callbacks)
+            callbacks
+        )
     }
 
     private fun bindWidgets() {
@@ -54,7 +55,7 @@ class ConfirmPhoneNumber : AppCompatActivity() {
         confirmCode = findViewById(R.id.confirm_code)
         progressBar = findViewById(R.id.progress_bar)
         progressBar.visibility = View.GONE
-        callbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
                 super.onCodeSent(p0, p1)
                 systemVerificationCode = p0
@@ -62,7 +63,7 @@ class ConfirmPhoneNumber : AppCompatActivity() {
 
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 val verificationCode = p0.smsCode
-                if (verificationCode!=null) {
+                if (verificationCode != null) {
                     progressBar.visibility = View.VISIBLE
                     verifyCode(verificationCode)
                 }
@@ -76,20 +77,23 @@ class ConfirmPhoneNumber : AppCompatActivity() {
     }
 
     private fun verifyCode(verificationCode: String) {
-        val phoneAuthCredential = PhoneAuthProvider.getCredential(systemVerificationCode, verificationCode)
+        val phoneAuthCredential =
+            PhoneAuthProvider.getCredential(systemVerificationCode, verificationCode)
         signInUserByCredential(phoneAuthCredential)
     }
 
     private fun signInUserByCredential(phoneAuthCredential: PhoneAuthCredential) {
         val auth = Firebase.auth
-        auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(this
-        ) {task ->
-            if (task.isSuccessful){
+        auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(
+            this
+        ) { task ->
+            if (task.isSuccessful) {
                 val i = Intent(this@ConfirmPhoneNumber, MainActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(i)
             } else {
-                Toast.makeText(this@ConfirmPhoneNumber, task.exception?.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ConfirmPhoneNumber, task.exception?.message, Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

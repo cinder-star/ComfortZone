@@ -1,6 +1,5 @@
 package com.sihan.comfortzone.domains
 
-import android.util.Log
 import io.paperdb.Paper
 
 class ShoppingCart {
@@ -35,7 +34,7 @@ class ShoppingCart {
             if (targetItem != null) {
                 cartItem.quantity--
                 targetItem.quantity--
-                if (targetItem.quantity == 0){
+                if (targetItem.quantity == 0) {
                     cart.remove(targetItem)
                 }
             }
@@ -70,7 +69,7 @@ class ShoppingCart {
                     targetItem.product = product
                 }
             }
-            cart.forEach {cartItem ->
+            cart.forEach { cartItem ->
                 val targetItem = products.singleOrNull {
                     it.id == cartItem.product.id
                 }
@@ -93,6 +92,7 @@ class ShoppingCart {
         fun getCart(): MutableList<CartItem> {
             return Paper.book().read("cart", mutableListOf())
         }
+
         fun getShoppingCartSize(): Int {
             var cartSize = 0
             getCart().forEach {

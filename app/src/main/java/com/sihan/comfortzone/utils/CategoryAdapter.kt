@@ -15,7 +15,10 @@ import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.Category
 import com.sihan.comfortzone.repositories.OnCategoryListener
 
-class CategoryAdapter(var context: Context, options: FirebaseRecyclerOptions<Category>, private var onCategoryListener: OnCategoryListener
+class CategoryAdapter(
+    var context: Context,
+    options: FirebaseRecyclerOptions<Category>,
+    private var onCategoryListener: OnCategoryListener
 ) :
     FirebaseRecyclerAdapter<Category, CategoryAdapter.ViewHolder>(options) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,9 +36,9 @@ class CategoryAdapter(var context: Context, options: FirebaseRecyclerOptions<Cat
     ) : RecyclerView.ViewHolder(view) {
         fun bindItem(category: Category, context: Context) {
             val imageView: ImageView = itemView.findViewById(R.id.category_image)
-            val imageRef = Firebase.storage.reference.child("categories/"+category.imagePath)
+            val imageRef = Firebase.storage.reference.child("categories/" + category.imagePath)
             itemView.findViewById<TextView>(R.id.category_name).text = category.name
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 onCategoryListener.onCategoryClicked(category)
             }
             GlideApp.with(context)

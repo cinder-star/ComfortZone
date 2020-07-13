@@ -1,6 +1,6 @@
 package com.sihan.comfortzone.domains
 
-data class PhotoOrder (
+data class PhotoOrder(
     val id: String? = null,
     var filepath: String? = null,
     var ownerId: String? = null,

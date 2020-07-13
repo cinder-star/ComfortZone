@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComfortZone"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.SplashActivity"
+        <activity
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +53,7 @@
         <activity android:name=".activities.ConfirmPhoneNumber" />
         <activity android:name=".activities.ChooserActivity" />
         <activity android:name=".activities.PhoneLoginActivity" />
-        <activity android:name=".activities.SliderActivity"/>
+        <activity android:name=".activities.SliderActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

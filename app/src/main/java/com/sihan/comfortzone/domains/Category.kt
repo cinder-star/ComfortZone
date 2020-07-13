@@ -1,6 +1,6 @@
 package com.sihan.comfortzone.domains
 
-data class Category (
+data class Category(
     val id: String? = null,
     val name: String? = null,
     val imagePath: String? = null,

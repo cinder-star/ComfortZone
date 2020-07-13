@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.activities.MainActivity
 
 abstract class EmailAuthActivity(private var xmlId: Int) : AppCompatActivity() {
-    private var auth =  Firebase.auth
+    private var auth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,10 @@ abstract class EmailAuthActivity(private var xmlId: Int) : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 Log.w("email_sign_in", "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, "Authentication failed.",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    baseContext, "Authentication failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -44,8 +46,10 @@ abstract class EmailAuthActivity(private var xmlId: Int) : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                 } else {
                     Log.w("email_log_in", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }

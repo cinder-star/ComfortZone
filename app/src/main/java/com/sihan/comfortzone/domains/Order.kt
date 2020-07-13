@@ -1,6 +1,6 @@
 package com.sihan.comfortzone.domains
 
-data class Order (
+data class Order(
     val id: String? = null,
     val ownerId: String? = null,
     val totalPrice: Double? = 0.0,

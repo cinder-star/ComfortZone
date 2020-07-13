@@ -15,7 +15,7 @@ class DataManager(var path: String) {
     inline fun <reified P : Any> setListener(adapter: MyAdapter) {
         val items: MutableList<P> = arrayListOf()
         val reference: DatabaseReference = Firebase.database.reference.child(path)
-        reference.addValueEventListener(object: ValueEventListener{
+        reference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {

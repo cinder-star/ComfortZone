@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragments.CategoryProductFragment">
+
     <TextView
         android:id="@+id/category_indicator"
         android:layout_width="match_parent"
@@ -12,10 +13,11 @@
         android:padding="10dp"
         android:textColor="@color/brand"
         android:textSize="21sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_product"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -113,7 +113,7 @@ class PhotoOrderActivity : AppCompatActivity() {
         address: String,
         number: String
     ) {
-        val photoOrder =  PhotoOrder(
+        val photoOrder = PhotoOrder(
             timeStamp,
             uploadName,
             userId,
@@ -127,7 +127,11 @@ class PhotoOrderActivity : AppCompatActivity() {
                 fileUpload()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Unexpected error occurred!\n Order could not be sent.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Unexpected error occurred!\n Order could not be sent.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 

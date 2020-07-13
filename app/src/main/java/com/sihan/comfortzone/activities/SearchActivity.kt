@@ -2,9 +2,9 @@ package com.sihan.comfortzone.activities
 
 import android.app.SearchManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.sihan.comfortzone.R
 
 class SearchActivity : AppCompatActivity() {

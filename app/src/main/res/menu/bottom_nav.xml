@@ -10,7 +10,7 @@
         android:id="@+id/cart"
         android:icon="@drawable/ic_bag"
         android:title="@string/cart"
-        app:cnb_iconColor="@color/brand"/>
+        app:cnb_iconColor="@color/brand" />
     <item
         android:id="@+id/nav_contact_us"
         android:icon="@drawable/ic_bell"

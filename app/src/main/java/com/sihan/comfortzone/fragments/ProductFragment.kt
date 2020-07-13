@@ -1,20 +1,16 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sihan.comfortzone.R
-import com.sihan.comfortzone.database.DataManager
 import com.sihan.comfortzone.domains.Category
 import com.sihan.comfortzone.domains.MyStack
 import com.sihan.comfortzone.domains.Product
@@ -22,7 +18,6 @@ import com.sihan.comfortzone.repositories.OnCategoryListener
 import com.sihan.comfortzone.repositories.OnProductListener
 import com.sihan.comfortzone.utils.CategoryAdapter
 import com.sihan.comfortzone.utils.ProductAdapter
-import io.paperdb.Paper
 
 /**
  * A simple [Fragment] subclass.
@@ -111,7 +106,7 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
         bundle.putSerializable("id", id)
         if (category.subCategory == "yes") {
             loadFragment(SubCategoryFragment(), bundle)
-        } else{
+        } else {
             loadFragment(CategoryProductFragment(), bundle)
         }
     }

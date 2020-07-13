@@ -1,7 +1,6 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +77,7 @@ class SingleProductViewFragment : Fragment() {
         totalPrice = view.findViewById(R.id.total_price)
         addToCartButton = view.findViewById(R.id.add_to_cart)
         product = this.arguments!!.getSerializable("product") as Product
-        imageRef = Firebase.storage.reference.child("products/"+product.imagePath)
+        imageRef = Firebase.storage.reference.child("products/" + product.imagePath)
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
     }

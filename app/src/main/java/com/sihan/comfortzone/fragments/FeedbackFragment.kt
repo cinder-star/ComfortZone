@@ -40,13 +40,7 @@ class ContactUsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_contact_us, container, false)
-        val phone = "+8801922227400"
-        call = view!!.findViewById(R.id.call_us)
-        call.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
-            activity!!.startActivity(intent)
-        }
+        val view = inflater.inflate(R.layout.fragment_feedback, container, false)
         return view
     }
 

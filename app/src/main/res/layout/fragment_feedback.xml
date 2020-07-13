@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
@@ -36,20 +37,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ঠিকানা">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/customer_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:hint="মোবাইল নম্বর (যেমন: 01XXXXXXXXX)">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -59,37 +46,27 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/send_order"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="order" />
-    </LinearLayout>
+            android:hint="আপনার মতামত">
 
-    <RelativeLayout
-        android:id="@+id/progress_bar_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="35dp"
-        android:background="@drawable/rectangle"
-        android:padding="20dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+            <EditText
+                android:id="@+id/opinion"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:inputType="textMultiLine"
+                tools:ignore="Autofill,LabelFor">
 
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/upload_progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/send_opinion"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:progressTint="@color/brand" />
-    </RelativeLayout>
-
+            android:layout_height="wrap_content"
+            android:text="send" />
+    </LinearLayout>
 </LinearLayout>

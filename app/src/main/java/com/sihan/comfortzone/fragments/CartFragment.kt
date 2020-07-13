@@ -2,7 +2,6 @@ package com.sihan.comfortzone.fragments
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,12 +65,12 @@ class CartFragment : Fragment() {
 
     private fun bindDataListener() {
         val dataRef = Firebase.database.reference.child("products")
-        dataRef.addValueEventListener(object: ValueEventListener{
+        dataRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val items: MutableList<Product> = mutableListOf()
-                snapshot.children.forEach{
+                snapshot.children.forEach {
                     items.add(it.getValue<Product>() as Product)
                 }
                 val updateThread = UpdateThread(items, activity!!, totalPriceView, cartAdapter)
@@ -87,7 +86,7 @@ class CartFragment : Fragment() {
         totalPriceView = view!!.findViewById(R.id.total_price)
         checkout = view.findViewById(R.id.checkout)
         checkout.setOnClickListener {
-            if(validate()) {
+            if (validate()) {
                 stack.push("orderFragment")
                 val bundle = Bundle()
                 bundle.putSerializable("stack", stack)
@@ -97,7 +96,7 @@ class CartFragment : Fragment() {
     }
 
     private fun validate(): Boolean {
-        if (ShoppingCart.getShoppingCartSize() == 0){
+        if (ShoppingCart.getShoppingCartSize() == 0) {
             Toast.makeText(activity!!, "Cart is empty!", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -121,14 +120,20 @@ class CartFragment : Fragment() {
     }
 
     private fun setupCartView(view: View?) {
-        cartAdapter = activity?.let { ShoppingCartAdapter(it, ShoppingCart.getCart(), totalPriceView) }!!
+        cartAdapter =
+            activity?.let { ShoppingCartAdapter(it, ShoppingCart.getCart(), totalPriceView) }!!
         cartAdapter.notifyDataSetChanged()
         cartRecyclerView = view!!.findViewById(R.id.shopping_cart_recyclerView)
         cartRecyclerView.adapter = cartAdapter
         cartRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
-    private class UpdateThread(private var items: MutableList<Product>, private var activity: Activity, private val textView: TextView, private val adapter: ShoppingCartAdapter): Thread() {
+    private class UpdateThread(
+        private var items: MutableList<Product>,
+        private var activity: Activity,
+        private val textView: TextView,
+        private val adapter: ShoppingCartAdapter
+    ) : Thread() {
         override fun run() {
             ShoppingCart.bulkUpdate(items)
             adapter.setItem(ShoppingCart.getCart())

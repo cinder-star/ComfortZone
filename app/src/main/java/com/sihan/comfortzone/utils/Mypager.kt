@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager.widget.PagerAdapter
 import com.sihan.comfortzone.R
 
-class MyPager(private val context: Context): PagerAdapter() {
+class MyPager(private val context: Context) : PagerAdapter() {
     private val ids: IntArray =
         intArrayOf(R.drawable.ic_slide_1, R.drawable.ic_slide_2, R.drawable.ic_slide_3)
 
@@ -24,9 +24,16 @@ class MyPager(private val context: Context): PagerAdapter() {
 
     @SuppressLint("InflateParams")
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_onboarding_slider_page, null)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.fragment_onboarding_slider_page, null)
         val imageView: ImageView = view.findViewById(R.id.slider_image)
-        imageView.setImageDrawable(ResourcesCompat.getDrawable(context.resources, getImageAt(position), null))
+        imageView.setImageDrawable(
+            ResourcesCompat.getDrawable(
+                context.resources,
+                getImageAt(position),
+                null
+            )
+        )
         container.addView(view)
         return view
     }
