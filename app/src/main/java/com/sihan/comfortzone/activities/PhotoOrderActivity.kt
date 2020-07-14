@@ -122,7 +122,7 @@ class PhotoOrderActivity : AppCompatActivity() {
             number
         )
         val database = Firebase.database.reference
-        database.child("/photoOrder/$timeStamp").setValue(photoOrder)
+        database.child("/order/$timeStamp").setValue(photoOrder)
             .addOnSuccessListener {
                 fileUpload()
             }

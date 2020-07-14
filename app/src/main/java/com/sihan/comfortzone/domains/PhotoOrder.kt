@@ -2,9 +2,10 @@ package com.sihan.comfortzone.domains
 
 data class PhotoOrder(
     val id: String? = null,
-    var filepath: String? = null,
-    var ownerId: String? = null,
-    var name: String? = null,
-    var address: String? = null,
-    var mobileNo: String? = null
+    val imagePath: String? = null,
+    val ownerId: String? = null,
+    val name: String? = null,
+    val address: String? = null,
+    val mobileNumber: String? = null,
+    val completed: String? = "no"
 )
