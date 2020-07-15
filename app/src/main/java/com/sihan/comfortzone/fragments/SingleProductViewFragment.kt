@@ -98,6 +98,10 @@ class SingleProductViewFragment : Fragment() {
             quantity.text = max(quantity.text.toString().toInt() - 1, 0).toString()
             updatePrice()
         }
+        removeButton.setOnClickListener {
+            quantity.text = "0"
+            updatePrice()
+        }
         addToCartButton.setOnClickListener {
             val total = quantity.text.toString().toInt()
             if (total != 0) {

@@ -15,8 +15,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        Paper.init(this)
-        Firebase.database.setPersistenceEnabled(true)
         Handler(Looper.myLooper()!!).postDelayed(Runnable {
             checkStatus()
         }, 750)
