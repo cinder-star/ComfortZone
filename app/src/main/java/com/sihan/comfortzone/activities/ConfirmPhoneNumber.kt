@@ -77,9 +77,11 @@ class ConfirmPhoneNumber : AppCompatActivity() {
     }
 
     private fun verifyCode(verificationCode: String) {
-        val phoneAuthCredential =
-            PhoneAuthProvider.getCredential(systemVerificationCode, verificationCode)
-        signInUserByCredential(phoneAuthCredential)
+        try {
+            val phoneAuthCredential =
+                PhoneAuthProvider.getCredential(systemVerificationCode, verificationCode)
+            signInUserByCredential(phoneAuthCredential)
+        } catch (e: UninitializedPropertyAccessException) {}
     }
 
     private fun signInUserByCredential(phoneAuthCredential: PhoneAuthCredential) {

@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,7 @@ class CartFragment : Fragment() {
     private lateinit var totalPriceView: TextView
     private lateinit var checkout: Button
     private lateinit var stack: MyStack<String>
+    private lateinit var mActivity: Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,11 @@ class CartFragment : Fragment() {
         return view
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as Activity
+    }
+
     private fun bindDataListener() {
         val dataRef = Firebase.database.reference.child("products")
         dataRef.addValueEventListener(object : ValueEventListener {
@@ -73,7 +80,7 @@ class CartFragment : Fragment() {
                 snapshot.children.forEach {
                     items.add(it.getValue<Product>() as Product)
                 }
-                val updateThread = UpdateThread(items, activity!!, totalPriceView, cartAdapter)
+                val updateThread = UpdateThread(items, mActivity, totalPriceView, cartAdapter)
                 updateThread.start()
             }
 
