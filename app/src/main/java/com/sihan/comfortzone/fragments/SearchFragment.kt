@@ -68,7 +68,6 @@ class SearchFragment : Fragment(), OnProductListener {
 
     fun prepareSearchResult() {
         var search = stack.peek()!!
-        Log.e("stack fragment", search)
         search = search.split("_")[1]
         if (search.isNotEmpty()) {
             val ref = Firebase.database.reference.child("/products")
