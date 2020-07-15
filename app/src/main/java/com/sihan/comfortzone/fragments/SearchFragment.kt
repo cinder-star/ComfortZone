@@ -1,6 +1,7 @@
 package com.sihan.comfortzone.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class SearchFragment : Fragment(), OnProductListener {
 
     fun prepareSearchResult() {
         var search = stack.peek()!!
+        Log.e("stack fragment", search)
         search = search.split("_")[1]
         if (search.isNotEmpty()) {
             val ref = Firebase.database.reference.child("/products")

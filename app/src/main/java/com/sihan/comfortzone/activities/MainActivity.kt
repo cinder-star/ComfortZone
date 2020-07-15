@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                             supportFragmentManager.findFragmentById(R.id.fragment_holder) as SearchFragment
                         fragment.prepareSearchResult()
                     }
-                    materialSearchView.hideKeyboard()
+                    materialSearchView.closeSearch()
                 }
                 return true
             }
@@ -192,6 +193,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        Log.e("stack", stack.toString())
+        Log.e("current_fragment_main", supportFragmentManager.backStackEntryCount.toString())
         if (materialSearchView.isSearchOpen) {
             materialSearchView.closeSearch()
         } else {
@@ -207,6 +210,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 stack.pop()
                 fragName = stack.peek()
+                Log.e("fragname", fragName!!)
                 when (fragName) {
                     "productFragment" -> {
                         super.onBackPressed()
@@ -222,6 +226,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else -> {
                         super.onBackPressed()
+                        supportFragmentManager.popBackStackImmediate()
                     }
                 }
             }
