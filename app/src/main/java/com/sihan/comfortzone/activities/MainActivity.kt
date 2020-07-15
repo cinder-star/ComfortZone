@@ -207,22 +207,31 @@ class MainActivity : AppCompatActivity() {
             } else {
                 stack.pop()
                 fragName = stack.peek()
-                when (fragName) {
-                    "productFragment" -> {
-                        super.onBackPressed()
-                        syncFragments(R.id.nav_home, R.id.home_drawer)
-                    }
-                    "cartFragment" -> {
-                        super.onBackPressed()
-                        syncFragments(R.id.cart, R.id.cart_drawer)
-                    }
-                    "feedbackFragment" -> {
-                        super.onBackPressed()
-                        syncFragments(R.id.nav_feedback, R.id.drawer_feedback)
-                    }
-                    else -> {
-                        super.onBackPressed()
-                        supportFragmentManager.popBackStackImmediate()
+                if (fragName!!.startsWith("searchActivity")) {
+                    super.onBackPressed()
+                    supportFragmentManager.popBackStackImmediate()
+                }
+                else {
+                    when (fragName) {
+                        "productFragment" -> {
+                            super.onBackPressed()
+                            syncFragments(R.id.nav_home, R.id.home_drawer)
+                        }
+                        "cartFragment" -> {
+                            super.onBackPressed()
+                            syncFragments(R.id.cart, R.id.cart_drawer)
+                        }
+                        "orderFragment" -> {
+                            super.onBackPressed()
+                            syncFragments(R.id.cart, R.id.cart_drawer)
+                        }
+                        "feedbackFragment" -> {
+                            super.onBackPressed()
+                            syncFragments(R.id.nav_feedback, R.id.drawer_feedback)
+                        }
+                        else -> {
+                            super.onBackPressed()
+                        }
                     }
                 }
             }
