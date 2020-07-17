@@ -53,10 +53,12 @@ class ProductFragment : Fragment(), OnProductListener, OnCategoryListener {
     }
 
     private fun prepareCategoryView() {
-        val ref = Firebase.database.reference.child("/categories")
+        val ref =
+            Firebase.database.reference.child("/categories")
+        val query = ref.orderByChild("parent").equalTo("no")
         ref.keepSynced(true)
         val options = FirebaseRecyclerOptions.Builder<Category>()
-            .setQuery(ref, Category::class.java)
+            .setQuery(query, Category::class.java)
             .build()
         val categoryAdapter = CategoryAdapter(activity!!, options, this)
         categoryRecyclerView.adapter = categoryAdapter

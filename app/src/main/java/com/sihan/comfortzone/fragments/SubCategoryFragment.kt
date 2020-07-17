@@ -56,7 +56,7 @@ class SubCategoryFragment : Fragment(), OnCategoryListener {
     }
 
     private fun prepareSubcategory() {
-        val ref = Firebase.database.reference.child("/subCategories")
+        val ref = Firebase.database.reference.child("/categories")
         ref.keepSynced(true)
         val query = ref.orderByChild("parent").equalTo(categoryId)
         val options = FirebaseRecyclerOptions.Builder<Category>()
