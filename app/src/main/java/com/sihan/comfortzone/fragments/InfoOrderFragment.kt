@@ -6,11 +6,14 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -43,6 +46,7 @@ class InfoOrderFragment : Fragment() {
     private lateinit var customerName: TextView
     private lateinit var customerNumber: TextView
     private lateinit var customerAddresses: TextView
+    private lateinit var confirmationHolder: RelativeLayout
     private lateinit var stack: MyStack<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +86,7 @@ class InfoOrderFragment : Fragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun totalOrderProcess(view: View) {
+        view.hideKeyboard()
         @Suppress("SpellCheckingInspection")
         val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         val price = calculatePrice()
@@ -106,7 +111,6 @@ class InfoOrderFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-        view.hideKeyboard()
     }
 
     private fun loadFragment(fragment: Fragment, bundle: Bundle) {
@@ -145,7 +149,10 @@ class InfoOrderFragment : Fragment() {
         stack.push("productFragment")
         val bundle = Bundle()
         bundle.putSerializable("stack", stack)
-        loadFragment(ProductFragment(), bundle)
+        confirmationHolder.visibility = View.VISIBLE
+        Handler(Looper.myLooper()!!).postDelayed({
+            loadFragment(ProductFragment(), bundle)
+        }, 750)
     }
 
     private fun bindWidgets(view: View) {
@@ -153,6 +160,7 @@ class InfoOrderFragment : Fragment() {
         customerName = view.findViewById(R.id.customer_name)
         customerAddresses = view.findViewById(R.id.customer_address)
         customerNumber = view.findViewById(R.id.customer_phone)
+        confirmationHolder = view.findViewById(R.id.confirmation_holder)
         @Suppress("UNCHECKED_CAST")
         stack = this.arguments!!.getSerializable("stack") as MyStack<String>
     }

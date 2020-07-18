@@ -1,3 +1,5 @@
+@file:Suppress("PrivatePropertyName")
+
 package com.sihan.comfortzone.activities
 
 import android.annotation.SuppressLint
@@ -14,6 +16,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -43,9 +46,11 @@ class PhotoOrderActivity : AppCompatActivity() {
     private lateinit var customerName: TextView
     private lateinit var customerNumber: TextView
     private lateinit var customerAddresses: TextView
+    private lateinit var confirmationText: RelativeLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_order)
+        title = "বাজারের ছবি/প্রেসক্রিপশন আপলোড"
         bindWidgets()
         bindListeners()
     }
@@ -59,6 +64,7 @@ class PhotoOrderActivity : AppCompatActivity() {
         customerName = findViewById(R.id.customer_name)
         customerAddresses = findViewById(R.id.customer_address)
         customerNumber = findViewById(R.id.customer_phone)
+        confirmationText = findViewById(R.id.confirmation_holder)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -86,6 +92,7 @@ class PhotoOrderActivity : AppCompatActivity() {
         }
 
         orderButton.setOnClickListener {
+            orderButton.hideKeyboard()
             if (isInternetAvailable()) {
                 if (uploadName != null && validate()) {
                     relativeLayout.visibility = View.VISIBLE
@@ -137,7 +144,7 @@ class PhotoOrderActivity : AppCompatActivity() {
 
     private fun fileUpload() {
         @Suppress("DEPRECATION")
-        var bitmap = if (android.os.Build.VERSION.SDK_INT >= 29) {
+        var bitmap = if (Build.VERSION.SDK_INT >= 29) {
             ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.contentResolver, uploadUri!!))
         } else {
             MediaStore.Images.Media.getBitmap(this.contentResolver, uploadUri)
@@ -158,7 +165,7 @@ class PhotoOrderActivity : AppCompatActivity() {
             this,
             "order placed successfully",
             "order placing failed"
-        ).uploadFile()
+        ).uploadFile(confirmationText)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -242,5 +249,10 @@ class PhotoOrderActivity : AppCompatActivity() {
         }
 
         return result
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

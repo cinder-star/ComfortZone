@@ -2,6 +2,8 @@ package com.sihan.comfortzone.database
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -27,11 +29,14 @@ class StorageUploadManager(
         fileRef = storageRef.child(path)
     }
 
-    fun uploadFile() {
+    fun uploadFile(confirmationText: RelativeLayout) {
         fileRef.putBytes(data).addOnSuccessListener {
             relativeLayout.visibility = View.GONE
             Toast.makeText(context, successString, Toast.LENGTH_SHORT).show()
-            activity.finish()
+            confirmationText.visibility = View.VISIBLE
+            Handler(Looper.myLooper()!!).postDelayed({
+                activity.finish()
+            }, 750)
         }.addOnFailureListener {
             relativeLayout.visibility = View.GONE
             Toast.makeText(context, failureString, Toast.LENGTH_SHORT).show()
