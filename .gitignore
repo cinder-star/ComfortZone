@@ -11,5 +11,6 @@
 
 /.gradle/
 /.idea/
-/release/
+/app/release/
+*.apk
 google-services.json
