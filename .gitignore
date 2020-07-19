@@ -11,4 +11,5 @@
 
 /.gradle/
 /.idea/
+/release/
 google-services.json
