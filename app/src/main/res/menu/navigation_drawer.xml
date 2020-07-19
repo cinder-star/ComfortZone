@@ -14,6 +14,10 @@
             android:icon="@drawable/ic_send"
             android:title="@string/give_opinion" />
         <item
+            android:id="@+id/drawer_dev"
+            android:icon="@drawable/ic_info"
+            android:title="@string/dev_info"/>
+        <item
             android:id="@+id/sign_out_drawer"
             android:icon="@drawable/ic_log_out"
             android:title="@string/log_out" />

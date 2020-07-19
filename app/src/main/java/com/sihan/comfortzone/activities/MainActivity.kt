@@ -25,10 +25,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.sihan.comfortzone.R
 import com.sihan.comfortzone.domains.MyStack
-import com.sihan.comfortzone.fragments.CartFragment
-import com.sihan.comfortzone.fragments.FeedbackFragment
-import com.sihan.comfortzone.fragments.ProductFragment
-import com.sihan.comfortzone.fragments.SearchFragment
+import com.sihan.comfortzone.fragments.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -122,6 +119,11 @@ class MainActivity : AppCompatActivity() {
                 stack.push("feedbackFragment")
                 navigationBar.setItemSelected(R.id.nav_feedback)
                 loadFragment(FeedbackFragment())
+            }
+            R.id.drawer_dev -> {
+                stack.push("devFragment")
+                navigationBar.setItemSelected(R.id.nav_dev)
+                loadFragment(DevInfoFragment())
             }
             R.id.sign_out_drawer -> {
                 Firebase.auth.signOut()
@@ -229,6 +231,10 @@ class MainActivity : AppCompatActivity() {
                             super.onBackPressed()
                             syncFragments(R.id.nav_feedback, R.id.drawer_feedback)
                         }
+                        "devFragment" -> {
+                            super.onBackPressed()
+                            syncFragments(R.id.nav_dev, R.id.drawer_dev)
+                        }
                         else -> {
                             super.onBackPressed()
                         }
@@ -262,6 +268,11 @@ class MainActivity : AppCompatActivity() {
                         stack.push("feedbackFragment")
                         navigationView.setCheckedItem(R.id.drawer_feedback)
                         loadFragment(FeedbackFragment())
+                    }
+                    R.id.nav_dev -> {
+                        stack.push("devFragment")
+                        navigationView.setCheckedItem(R.id.drawer_dev)
+                        loadFragment(DevInfoFragment())
                     }
                 }
             }

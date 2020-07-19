@@ -59,4 +59,5 @@
     <string name="contact_us">যোগাযোগ করুন</string>
     <string name="give_opinion">মতামত দিন</string>
     <string name="confirmation_text">আপনার অর্ডারটি জমা হয়েছে। অনুগ্রহপূর্বক ডেলিভারির জন্য অপেক্ষা করুন...</string>
+    <string name="dev_info">ডেভলপার ইনফো</string>
 </resources>

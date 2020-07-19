@@ -16,6 +16,11 @@
         android:icon="@drawable/ic_send"
         android:title="@string/give_opinion"
         app:cnb_iconColor="@color/brand" />
+    <item
+        android:id="@+id/nav_dev"
+        android:icon="@drawable/ic_info"
+        android:title="@string/dev_info"
+        app:cnb_iconColor="@color/brand"/>
 </menu>
 
     <!-- layout.xml -->
