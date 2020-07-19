@@ -60,4 +60,6 @@
     <string name="give_opinion">মতামত দিন</string>
     <string name="confirmation_text">আপনার অর্ডারটি জমা হয়েছে। অনুগ্রহপূর্বক ডেলিভারির জন্য অপেক্ষা করুন...</string>
     <string name="dev_info">ডেভলপার ইনফো</string>
+    <string name="dev_description">This software is developed by YAS(Yet Another Startup). We are a group of enthusiasts  helping start-ups kick-start their business with development support and the power of latest technology. We are open to comments and ideas, reach us out if you have anything to share about your project, idea or anything else!</string>
+    <string name="developer_logo">Developer Logo</string>
 </resources>
