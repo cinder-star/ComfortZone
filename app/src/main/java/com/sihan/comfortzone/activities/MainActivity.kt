@@ -122,7 +122,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.drawer_dev -> {
                 stack.push("devFragment")
-                navigationBar.setItemSelected(R.id.nav_dev)
                 loadFragment(DevInfoFragment())
             }
             R.id.sign_out_drawer -> {
@@ -233,7 +232,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         "devFragment" -> {
                             super.onBackPressed()
-                            syncFragments(R.id.nav_dev, R.id.drawer_dev)
+                            navigationView.setCheckedItem(R.id.drawer_dev)
                         }
                         else -> {
                             super.onBackPressed()
@@ -268,11 +267,6 @@ class MainActivity : AppCompatActivity() {
                         stack.push("feedbackFragment")
                         navigationView.setCheckedItem(R.id.drawer_feedback)
                         loadFragment(FeedbackFragment())
-                    }
-                    R.id.nav_dev -> {
-                        stack.push("devFragment")
-                        navigationView.setCheckedItem(R.id.drawer_dev)
-                        loadFragment(DevInfoFragment())
                     }
                 }
             }
