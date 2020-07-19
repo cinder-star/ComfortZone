@@ -36,7 +36,7 @@ class StorageUploadManager(
             confirmationText.visibility = View.VISIBLE
             Handler(Looper.myLooper()!!).postDelayed({
                 activity.finish()
-            }, 750)
+            }, 1000)
         }.addOnFailureListener {
             relativeLayout.visibility = View.GONE
             Toast.makeText(context, failureString, Toast.LENGTH_SHORT).show()

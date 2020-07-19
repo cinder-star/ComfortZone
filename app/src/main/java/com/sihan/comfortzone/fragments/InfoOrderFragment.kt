@@ -146,13 +146,13 @@ class InfoOrderFragment : Fragment() {
         }
         ShoppingCart.clearCart()
         stack.clear()
-        stack.push("productFragment")
+        stack.push("cartFragment")
         val bundle = Bundle()
         bundle.putSerializable("stack", stack)
         confirmationHolder.visibility = View.VISIBLE
         Handler(Looper.myLooper()!!).postDelayed({
-            loadFragment(ProductFragment(), bundle)
-        }, 750)
+            loadFragment(CartFragment(), bundle)
+        }, 1000)
     }
 
     private fun bindWidgets(view: View) {
