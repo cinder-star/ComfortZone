@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.sihan.comfortzone"
+        applicationId "com.comfortzone.user"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
