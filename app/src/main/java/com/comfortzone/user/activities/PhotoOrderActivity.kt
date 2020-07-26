@@ -81,7 +81,7 @@ class PhotoOrderActivity : AppCompatActivity() {
                     photoFile?.also {
                         val photoURI: Uri = FileProvider.getUriForFile(
                             this,
-                            "com.sihan.comfortzone",
+                            "com.comfortzone.user",
                             it
                         )
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

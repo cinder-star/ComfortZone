@@ -1,7 +1,11 @@
 package com.comfortzone.user.activities
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import com.comfortzone.user.R
 import com.comfortzone.user.repositories.EmailAuthActivity
 
@@ -10,18 +14,22 @@ class SignUpActivity : EmailAuthActivity(R.layout.activity_sign_up) {
     private lateinit var password: EditText
     private lateinit var confirmPassword: EditText
     private lateinit var button: Button
+    private lateinit var progressBar: ProgressBar
 
     override fun bindWidgets() {
         username = findViewById(R.id.credential)
         password = findViewById(R.id.password)
         confirmPassword = findViewById(R.id.confirm_password)
         button = findViewById(R.id.sign_up)
+        progressBar = findViewById(R.id.progress_bar)
     }
 
     override fun bindListeners() {
         button.setOnClickListener {
             if (validate()) {
-                signUpUser(username.text.toString(), password.text.toString())
+                button.hideKeyboard()
+                progressBar.visibility = View.VISIBLE
+                signUpUser(username.text.toString(), password.text.toString(), progressBar)
             }
         }
     }
@@ -37,11 +45,21 @@ class SignUpActivity : EmailAuthActivity(R.layout.activity_sign_up) {
             username.requestFocus()
             return false
         }
+        if (pass.isEmpty()) {
+            password.error = "Password can't be empty!"
+            password.requestFocus()
+            return false
+        }
         if (confirmInput.isEmpty() || confirmInput != pass) {
             confirmPassword.error = "Passwords do not match!"
             confirmPassword.requestFocus()
             return false
         }
         return true
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

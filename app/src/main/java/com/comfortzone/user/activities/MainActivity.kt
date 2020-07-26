@@ -210,7 +210,6 @@ class MainActivity : AppCompatActivity() {
                 fragName = stack.peek()
                 if (fragName!!.startsWith("searchActivity")) {
                     super.onBackPressed()
-                    supportFragmentManager.popBackStackImmediate()
                 }
                 else {
                     when (fragName) {

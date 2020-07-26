@@ -1,8 +1,12 @@
 package com.comfortzone.user.activities
 
+import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.comfortzone.user.R
 import com.comfortzone.user.repositories.EmailAuthActivity
@@ -12,18 +16,22 @@ class LoginActivity : EmailAuthActivity(R.layout.activity_log_in) {
     private lateinit var password: EditText
     private lateinit var doSignUp: TextView
     private lateinit var button: Button
+    private lateinit var progressBar: ProgressBar
 
     override fun bindWidgets() {
         username = findViewById(R.id.credential_value)
         password = findViewById(R.id.password_value)
         button = findViewById(R.id.log_in)
         doSignUp = findViewById(R.id.redirect)
+        progressBar = findViewById(R.id.progress_bar)
     }
 
     override fun bindListeners() {
         button.setOnClickListener {
+            button.hideKeyboard()
             if (validate()) {
-                logInUser(username.text.toString(), password.text.toString())
+                progressBar.visibility = View.VISIBLE
+                logInUser(username.text.toString(), password.text.toString(), progressBar)
             }
         }
         doSignUp.setOnClickListener {
@@ -40,6 +48,16 @@ class LoginActivity : EmailAuthActivity(R.layout.activity_log_in) {
             username.requestFocus()
             return false
         }
+        if (password.text.toString().isEmpty()) {
+            password.error = "Password field empty!"
+            password.requestFocus()
+            return false
+        }
         return true
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
