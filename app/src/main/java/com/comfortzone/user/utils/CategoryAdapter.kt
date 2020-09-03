@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.signature.ObjectKey
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.ktx.Firebase
@@ -43,6 +44,7 @@ class CategoryAdapter(
             }
             GlideApp.with(context)
                 .load(imageRef)
+                .signature(ObjectKey(category.imagePath+category.lastModified))
                 .into(imageView)
         }
     }
