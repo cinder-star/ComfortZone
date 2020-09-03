@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.signature.ObjectKey
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.comfortzone.user.R
@@ -70,6 +71,7 @@ class ShoppingCartAdapter(
             }
             GlideApp.with(context)
                 .load(imageRef)
+                .signature(ObjectKey(cartItem.product.imagePath+cartItem.product.lastModified))
                 .into(productImage)
         }
 
