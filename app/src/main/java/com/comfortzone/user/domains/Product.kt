@@ -10,5 +10,6 @@ data class Product(
     var imagePath: String? = null,
     var category: String? = null,
     var popular: String? = "no",
-    var special: String? = "no"
+    var special: String? = "no",
+    var lastModified: String? = null
 ) : Serializable

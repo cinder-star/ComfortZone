@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.signature.ObjectKey
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.material.snackbar.Snackbar
@@ -45,13 +46,13 @@ class ProductAdapter(
         fun bindView(product: Product) {
             val productImage: ImageView = itemView.findViewById(R.id.product_image)
             val imageRef = Firebase.storage.reference.child("products/" + product.imagePath!!)
+            val prevPrice: TextView = itemView.findViewById(R.id.old_product_price)
             itemView.findViewById<TextView>(R.id.product_name).text = product.name
             itemView.findViewById<TextView>(R.id.product_price).text = product.price.toString()
-            itemView.findViewById<TextView>(R.id.old_product_price).text = product.price.toString()
+            prevPrice.text = product.price.toString()
             if (product.special == "yes") {
                 itemView.findViewById<TextView>(R.id.offer).visibility = View.VISIBLE
                 itemView.findViewById<LinearLayout>(R.id.old_price_holder).visibility = View.VISIBLE
-                val prevPrice: TextView = itemView.findViewById(R.id.old_product_price)
                 prevPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 prevPrice.text = product.prevPrice.toString()
             }
@@ -70,6 +71,7 @@ class ProductAdapter(
 
             GlideApp.with(context)
                 .load(imageRef)
+                .signature(ObjectKey(product.imagePath+product.lastModified))
                 .into(productImage)
         }
 
