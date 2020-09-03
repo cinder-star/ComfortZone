@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.comfortzone.user.R
 import com.comfortzone.user.domains.Category
 import com.comfortzone.user.domains.MyStack
@@ -18,6 +15,9 @@ import com.comfortzone.user.repositories.OnCategoryListener
 import com.comfortzone.user.repositories.OnProductListener
 import com.comfortzone.user.utils.CategoryAdapter
 import com.comfortzone.user.utils.ProductAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 /**
  * A simple [Fragment] subclass.

@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
-import com.facebook.login.widget.LoginButton
 import com.comfortzone.user.R
 import com.comfortzone.user.repositories.FacebookLogin
+import com.facebook.CallbackManager
+import com.facebook.login.widget.LoginButton
 
 class ChooserActivity : AppCompatActivity() {
     private lateinit var emailSignUp: Button

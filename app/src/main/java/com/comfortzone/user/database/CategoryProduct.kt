@@ -1,14 +1,14 @@
 package com.comfortzone.user.database
 
 import android.util.Log
+import com.comfortzone.user.domains.Product
+import com.comfortzone.user.repositories.MyAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.comfortzone.user.domains.Product
-import com.comfortzone.user.repositories.MyAdapter
 
 class CategoryProduct(
     private val path: String,

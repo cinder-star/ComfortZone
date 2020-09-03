@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.comfortzone.user.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.comfortzone.user.R
 import io.paperdb.Paper
 
 class SplashActivity : AppCompatActivity() {

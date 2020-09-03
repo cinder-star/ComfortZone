@@ -11,7 +11,11 @@ import com.comfortzone.user.repositories.OnOrderListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 
-class OrderAdapter(private val context: Context, private val onOrderListener: OnOrderListener, options: FirebaseRecyclerOptions<Order>) :
+class OrderAdapter(
+    private val context: Context,
+    private val onOrderListener: OnOrderListener,
+    options: FirebaseRecyclerOptions<Order>
+) :
     FirebaseRecyclerAdapter<Order, OrderAdapter.ViewHolder>(
         options
     ) {
@@ -25,7 +29,8 @@ class OrderAdapter(private val context: Context, private val onOrderListener: On
         holder.bindView(model)
     }
 
-    class ViewHolder(itemView: View, private val onOrderListener: OnOrderListener) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, private val onOrderListener: OnOrderListener) :
+        RecyclerView.ViewHolder(itemView) {
         fun bindView(order: Order) {
             itemView.setOnClickListener {
                 onOrderListener.onOrderClick(order)

@@ -11,16 +11,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.signature.ObjectKey
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.comfortzone.user.R
 import com.comfortzone.user.domains.CartItem
 import com.comfortzone.user.domains.Product
 import com.comfortzone.user.domains.ShoppingCart
 import com.comfortzone.user.repositories.OnProductListener
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class ProductAdapter(
     private val context: Context,
@@ -71,7 +71,7 @@ class ProductAdapter(
 
             GlideApp.with(context)
                 .load(imageRef)
-                .signature(ObjectKey(product.imagePath+product.lastModified))
+                .signature(ObjectKey(product.imagePath + product.lastModified))
                 .into(productImage)
         }
 

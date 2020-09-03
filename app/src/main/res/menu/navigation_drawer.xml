@@ -16,7 +16,7 @@
         <item
             android:id="@+id/drawer_dev"
             android:icon="@drawable/ic_code"
-            android:title="@string/dev_info"/>
+            android:title="@string/dev_info" />
         <item
             android:id="@+id/sign_out_drawer"
             android:icon="@drawable/ic_log_out"

@@ -8,13 +8,13 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.comfortzone.user.R
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.comfortzone.user.R
 import java.util.concurrent.TimeUnit
 
 class ConfirmPhoneNumber : AppCompatActivity() {
@@ -81,7 +81,8 @@ class ConfirmPhoneNumber : AppCompatActivity() {
             val phoneAuthCredential =
                 PhoneAuthProvider.getCredential(systemVerificationCode, verificationCode)
             signInUserByCredential(phoneAuthCredential)
-        } catch (e: UninitializedPropertyAccessException) {}
+        } catch (e: UninitializedPropertyAccessException) {
+        }
     }
 
     private fun signInUserByCredential(phoneAuthCredential: PhoneAuthCredential) {

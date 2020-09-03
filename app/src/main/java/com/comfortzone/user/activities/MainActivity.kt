@@ -17,15 +17,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.comfortzone.user.R
+import com.comfortzone.user.domains.MyStack
+import com.comfortzone.user.fragments.*
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import com.comfortzone.user.R
-import com.comfortzone.user.domains.MyStack
-import com.comfortzone.user.fragments.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -210,8 +210,7 @@ class MainActivity : AppCompatActivity() {
                 fragName = stack.peek()
                 if (fragName!!.startsWith("searchActivity")) {
                     super.onBackPressed()
-                }
-                else {
+                } else {
                     when (fragName) {
                         "productFragment" -> {
                             super.onBackPressed()

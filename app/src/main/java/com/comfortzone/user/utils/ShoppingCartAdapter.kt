@@ -9,12 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.signature.ObjectKey
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.comfortzone.user.R
 import com.comfortzone.user.domains.CartItem
 import com.comfortzone.user.domains.ShoppingCart
 import com.comfortzone.user.repositories.MyAdapter
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class ShoppingCartAdapter(
     var context: Context,
@@ -71,7 +71,7 @@ class ShoppingCartAdapter(
             }
             GlideApp.with(context)
                 .load(imageRef)
-                .signature(ObjectKey(cartItem.product.imagePath+cartItem.product.lastModified))
+                .signature(ObjectKey(cartItem.product.imagePath + cartItem.product.lastModified))
                 .into(productImage)
         }
 

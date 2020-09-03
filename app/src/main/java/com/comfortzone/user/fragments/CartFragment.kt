@@ -12,17 +12,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.comfortzone.user.R
+import com.comfortzone.user.domains.MyStack
+import com.comfortzone.user.domains.Product
+import com.comfortzone.user.domains.ShoppingCart
+import com.comfortzone.user.utils.ShoppingCartAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.comfortzone.user.R
-import com.comfortzone.user.domains.MyStack
-import com.comfortzone.user.domains.Product
-import com.comfortzone.user.domains.ShoppingCart
-import com.comfortzone.user.utils.ShoppingCartAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

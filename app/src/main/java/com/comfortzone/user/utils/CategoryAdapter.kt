@@ -8,13 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.signature.ObjectKey
+import com.comfortzone.user.R
+import com.comfortzone.user.domains.Category
+import com.comfortzone.user.repositories.OnCategoryListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.comfortzone.user.R
-import com.comfortzone.user.domains.Category
-import com.comfortzone.user.repositories.OnCategoryListener
 
 class CategoryAdapter(
     var context: Context,
@@ -44,7 +44,7 @@ class CategoryAdapter(
             }
             GlideApp.with(context)
                 .load(imageRef)
-                .signature(ObjectKey(category.imagePath+category.lastModified))
+                .signature(ObjectKey(category.imagePath + category.lastModified))
                 .into(imageView)
         }
     }

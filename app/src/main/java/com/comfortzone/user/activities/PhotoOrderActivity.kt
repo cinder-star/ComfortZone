@@ -20,12 +20,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.comfortzone.user.R
 import com.comfortzone.user.database.StorageUploadManager
 import com.comfortzone.user.domains.PhotoOrder
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.io.File

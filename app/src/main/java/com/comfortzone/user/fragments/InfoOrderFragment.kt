@@ -17,14 +17,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.comfortzone.user.R
 import com.comfortzone.user.domains.MyStack
 import com.comfortzone.user.domains.Order
 import com.comfortzone.user.domains.OrderItem
 import com.comfortzone.user.domains.ShoppingCart
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 

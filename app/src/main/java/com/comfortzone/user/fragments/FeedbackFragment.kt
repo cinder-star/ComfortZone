@@ -9,12 +9,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.comfortzone.user.R
 import com.comfortzone.user.database.WriteFeedback
 import com.comfortzone.user.domains.Feedback
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 

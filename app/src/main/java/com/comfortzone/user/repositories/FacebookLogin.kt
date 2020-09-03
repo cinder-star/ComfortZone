@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.comfortzone.user.activities.MainActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -13,7 +14,6 @@ import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.comfortzone.user.activities.MainActivity
 
 class FacebookLogin(
     private var activity: Activity,

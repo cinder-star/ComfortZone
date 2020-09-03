@@ -9,15 +9,15 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import com.comfortzone.user.R
 import com.comfortzone.user.domains.MyStack
 import com.comfortzone.user.domains.Product
 import com.comfortzone.user.domains.ShoppingCart
 import com.comfortzone.user.utils.GlideApp
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import kotlin.math.max
 
 // TODO: Rename parameter arguments, choose names that match
