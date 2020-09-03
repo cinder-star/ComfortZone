@@ -5,5 +5,6 @@ data class OrderItem(
     val name: String? = null,
     val imagePath: String? = null,
     val price: Int? = 0,
-    val quantity: Int? = 0
+    val quantity: Int? = 0,
+    val lastModified: String? = null
 )

@@ -137,7 +137,8 @@ class InfoOrderFragment : Fragment() {
                     it.product.name,
                     it.product.imagePath,
                     it.product.price,
-                    it.quantity
+                    it.quantity,
+                    it.product.lastModified
                 )
             )
         }
